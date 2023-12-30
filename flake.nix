@@ -11,8 +11,9 @@
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
 
-    flake-utils = {
-      url = "github:numtide/flake-utils";
+    tools = {
+      url                        = "github:RGBCube/FlakeTools";
+      inputs.nixpkgs.follows     = "nixpkgs";
     };
 
     cargo2nix = {
@@ -22,9 +23,10 @@
     };
   };
 
-  outputs = { nixpkgs, flake-utils, cargo2nix, ... } @ inputs: flake-utils.lib.eachDefaultSystem (system: let
+  outputs = { self, nixpkgs, tools, cargo2nix } @ inputs: tools.eachDefaultLinuxArch (system: let
     pkgs = import nixpkgs {
       inherit system;
+
       overlays = [ cargo2nix.overlays.default ];
     };
 
@@ -34,12 +36,91 @@
       rustProfile = "minimal";
       packageFun  = import ./Cargo.nix;
     };
-  in rec {
-    devShells.default = rustPackages.workspaceShell {
+  in {
+    devShells.${system}.default = rustPackages.workspaceShell {
       packages = [ cargo2nix.packages.${system}.default ];
     };
 
-    packages.site    = rustPackages.workspace.site {};
-    packages.default = packages.site;
+    packages.${system}.site    = rustPackages.workspace.site {};
+    packages.${system}.default = self.packages.${system}.site;
+
+    nixosModules.default = { config, lib, pkgs, ... }: with lib; let
+      cfg = config.services.site;
+    in {
+      options = {
+        services.site = {
+          enable = mkEnableOption (mdDoc "site service");
+
+          port = mkOption {
+            type        = types.port;
+            default     = 8080;
+            example     = 80;
+            description = mdDoc ''
+              Specifies on which port the site service listens for connections.
+            '';
+          };
+
+          openFirewall = mkOption {
+            type        = types.bool;
+            default     = false;
+            description = mdDoc ''
+              Whether to open the firewall port for the tcp listener.
+            '';
+          };
+        };
+      };
+
+      config = mkIf cfg.enable {
+        systemd.services.site = {
+          description = "RGBCube's Homepage";
+          requires    = [ "network.target" ];
+          wantedBy    = [ "multi-user.target" ];
+
+          serviceConfig = let
+            needsPrivilidges = cfg.port < 1024;
+            capabilities     = [ "" ] ++ optionals needsPrivileges [ "CAP_NET_BIND_SERVICE" ];
+            rootDirectory    = "/run/site";
+          in {
+            ExecStart               = "${self.packages.${pkgs.system}.site}/bin/site --port ${cfg.port}";
+            Restart                 = "always";
+            DynamicUser             = true;
+            RootDirectory           = rootDirectory;
+            BindReadOnlyPaths       = [ builtins.storeDir ];
+            InaccessiblePaths       = [ "-+${rootDirectory}"];
+            RuntimeDirectory        = builtins.baseNameOf rootDirectory;
+            RuntimeDirectoryMode    = 700;
+            AmbientCapabilities     = capabilities;
+            CapabilityBoundingSet   = capabilities;
+            UMask                   = "0077";
+            LockPersonality         = true;
+            MemoryDenyWriteExecute  = true;
+            NoNewPrivileges         = true;
+            PrivateDevices          = true;
+            PrivateTmp              = true;
+            PrivateUsers            = !needsPrivileges;
+            ProtectClock            = true;
+            ProtectControlGroups    = true;
+            ProtectHome             = true;
+            ProtectHostname         = true;
+            ProtectKernelLogs       = true;
+            ProtectKernelModules    = true;
+            ProtectKernelTunables   = true;
+            ProtectSystem           = "strict";
+            ProtectProc             = "noaccess";
+            ProcSubset              = "pid";
+            RemoveIPC               = true;
+            RestrictAddressFamilies = [ "AF_INET" "AF_INET6" ];
+            RestrictNamespaces      = true;
+            RestrictRealtime        = true;
+            RestrictSUIDSGID        = true;
+            SystemCallArchitectures = "native";
+            SystemCallFilter        = [ "@system-service" "~@resources" "~@privileged" ];
+          };
+        };
+
+        networking.firewall.allowedTCPPorts =
+          optionals cfg.openFirewall [ cfg.port ];
+      };
+    };
   });
 }
