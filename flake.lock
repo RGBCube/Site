@@ -3,9 +3,7 @@
     "cargo2nix": {
       "inputs": {
         "flake-compat": "flake-compat",
-        "flake-utils": [
-          "flake-utils"
-        ],
+        "flake-utils": "flake-utils",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -78,8 +76,8 @@
     "root": {
       "inputs": {
         "cargo2nix": "cargo2nix",
-        "flake-utils": "flake-utils",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "tools": "tools"
       }
     },
     "rust-overlay": {
@@ -119,6 +117,26 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "tools": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1700815030,
+        "narHash": "sha256-x24obS8VMX5tmf8MkJMyjG7UxxJxSiH+k063Xwyfzqg=",
+        "owner": "RGBCube",
+        "repo": "FlakeTools",
+        "rev": "7fd62102ff360783e0fcd1f4eb434d90d06694c8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "RGBCube",
+        "repo": "FlakeTools",
         "type": "github"
       }
     }

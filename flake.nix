@@ -40,8 +40,10 @@
       packages = [ cargo2nix.packages.${system}.default ];
     };
 
-    packages.${system}.site    = rustPackages.workspace.site {};
-    packages.${system}.default = self.packages.${system}.site;
+    packages = rec {
+      site    = rustPackages.workspace.site {};
+      default = site;
+    };
 
     nixosModules.default = { config, lib, pkgs, ... }: with lib; let
       cfg = config.services.site;
