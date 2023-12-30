@@ -26,7 +26,7 @@ async fn main() -> anyhow::Result<()> {
         .target(env_logger::Target::Stdout)
         .init();
 
-    HttpServer::new(|| App::new())
+    HttpServer::new(App::new)
         .bind(("0.0.0.0", args.port))
         .with_context(|| format!("Failed to bind to 0.0.0.0:{port}", port = args.port))?
         .run()

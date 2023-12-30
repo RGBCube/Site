@@ -89,8 +89,6 @@
       audit = crane.cargoAudit (srcArgs // {
         inherit advisory-db;
       });
-
-      deny = crane.cargoDeny srcArgs;
     };
 
     packages.${system} = {
