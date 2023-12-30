@@ -60,6 +60,15 @@
             '';
           };
 
+          logLevel = mkOption {
+            type        = types.enum [ "off" "error" "warn" "info" "debug" "trace" ];
+            default     = "info";
+            example     = "warn";
+            description = mdDoc ''
+              Specifies the log level that the site service will log stuff with.
+            '';
+          };
+
           openFirewall = mkOption {
             type        = types.bool;
             default     = false;
@@ -81,7 +90,7 @@
             capabilities     = [ "" ] ++ optionals needsPrivileges [ "CAP_NET_BIND_SERVICE" ];
             rootDirectory    = "/run/site";
           in {
-            ExecStart               = "${self.packages.${pkgs.system}.site}/bin/site --port ${cfg.port}";
+            ExecStart               = "${self.packages.${pkgs.system}.site}/bin/site --port ${cfg.port} --log-level ${cfg.logLevel}";
             Restart                 = "always";
             DynamicUser             = true;
             RootDirectory           = rootDirectory;

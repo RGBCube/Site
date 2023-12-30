@@ -24,6 +24,12 @@ Specifies on which port the site service listens for connections.
 
 Default: 8080.
 
+#### `services.site.logLevel`
+
+The log level to log stuff with.
+
+Default: info.
+
 #### `services.site.openFirewall`
 
 Whether to open the firewall port for the tcp listener.
