@@ -17,9 +17,8 @@
     };
 
     cargo2nix = {
-      url                        = "github:cargo2nix/cargo2nix";
-      inputs.nixpkgs.follows     = "nixpkgs";
-      inputs.flake-utils.follows = "flake-utils";
+      url                    = "github:cargo2nix/cargo2nix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
