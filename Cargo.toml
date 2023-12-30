@@ -1,0 +1,11 @@
+[package]
+name        = "site"
+description = "The official website and link portal of RGBCube and his work."
+authors     = [ "RGBCube" ]
+license     = "GPL"
+version     = "0.0.1"
+homepage    = "https://rgbcube.github.io"
+repositoty  = "https://github.com/RGBCube/rgbcube.github.io"
+edition     = "2021"
+
+[dependencies]

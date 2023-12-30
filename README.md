@@ -1,5 +1,7 @@
 # RGBCube's Homepage
 
+The official website and link portal of RGBCube and his work.
+
 ## Running
 
 Simply run `nix run`. This will run the page at `0.0.0.0:80`.

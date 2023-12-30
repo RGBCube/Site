@@ -1,5 +1,15 @@
 *
 
+!src/
+
 !.gitignore
 
+!*.css
+!*.js
+!*.rs
+
+!*.lock
+!*.nix
+
 !*.md
+!*.toml
