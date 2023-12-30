@@ -9,3 +9,17 @@ repositoty  = "https://github.com/RGBCube/rgbcube.github.io"
 edition     = "2021"
 
 [dependencies]
+actix-web    = "4.4.1"
+bytes        = "1.5.0"
+cargo_toml   = "0.17.2"
+embed        = { git = "https://github.com/RGBCube/embed-rs" }
+env_logger   = "0.10.1"
+log          = "0.4.20"
+maud         = { version = "0.25.0", features = ["actix-web"] }
+mime_guess   = "2.0.4"
+minify-js    = "0.6.0"
+tar          = "0.4.40"
+tokio        = { version = "1.35.1", features = ["full"] }
+
+[build]
+incremental = true
