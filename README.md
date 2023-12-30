@@ -4,7 +4,31 @@ The official website and link portal of RGBCube and his work.
 
 ## Running
 
-Simply run `nix run`. This will run the page at `0.0.0.0:80`.
+The flake provides a NixOS module, you can use it by adding the flake to your
+inputs and then adding `site.nixosModules.default` to the `modules` parameter
+on the call set to `nixpkgs.lib.nixosSystem`.
+
+Check out the options to configure the service.
+
+### Options
+
+#### `services.site.enable`
+
+Enables the site service.
+
+Default: false.
+
+#### `services.site.port`
+
+Specifies on which port the site service listens for connections.
+
+Default: 8080.
+
+#### `services.site.openFirewall`
+
+Whether to open the firewall port for the tcp listener.
+
+Default: false.
 
 ## License
 
