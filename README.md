@@ -10,27 +10,27 @@ on the call set to `nixpkgs.lib.nixosSystem`.
 
 Check out the options to configure the service.
 
-### Options
+## Options
 
-#### `services.site.enable`
+### `services.site.enable`
 
 Enables the site service.
 
 Default: false.
 
-#### `services.site.port`
+### `services.site.port`
 
 Specifies on which port the site service listens for connections.
 
 Default: 8080.
 
-#### `services.site.logLevel`
+### `services.site.logLevel`
 
 The log level to log stuff with.
 
 Default: info.
 
-#### `services.site.openFirewall`
+### `services.site.openFirewall`
 
 Whether to open the firewall port for the tcp listener.
 
