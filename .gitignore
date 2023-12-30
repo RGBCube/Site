@@ -1,6 +1,11 @@
 *
 
 !src/
+!src/page/
+!src/page/cube/
+!src/routes/
+!src/routes/_404/
+!src/routes/index/
 
 !.gitignore
 

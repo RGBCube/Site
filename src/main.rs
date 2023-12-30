@@ -1,3 +1,8 @@
+#![feature(lazy_cell)]
+
+mod page;
+// mod routes;
+
 use actix_web::{
     main as async_main,
     App,
@@ -26,7 +31,7 @@ async fn main() -> anyhow::Result<()> {
         .target(env_logger::Target::Stdout)
         .init();
 
-    HttpServer::new(App::new)
+    HttpServer::new(App::new) //|| App::new().route(routes::index))
         .bind(("0.0.0.0", args.port))
         .with_context(|| format!("Failed to bind to 0.0.0.0:{port}", port = args.port))?
         .run()
