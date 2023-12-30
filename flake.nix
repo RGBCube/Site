@@ -12,36 +12,90 @@
     };
 
     tools = {
-      url                        = "github:RGBCube/FlakeTools";
-      inputs.nixpkgs.follows     = "nixpkgs";
+      url                    = "github:RGBCube/FlakeTools";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    cargo2nix = {
-      url                    = "github:cargo2nix/cargo2nix";
+    crane = {
+      url                    = "github:ipetkov/crane";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    fenix = {
+      url                              = "github:nix-community/fenix";
+      inputs.nixpkgs.follows           = "nixpkgs";
+      inputs.rust-analyzer-src.follows = "";
+    };
+
+    advisory-db = {
+      url = "github:rustsec/advisory-db";
+      flake = false;
     };
   };
 
-  outputs = { self, nixpkgs, tools, cargo2nix } @ inputs: tools.eachDefaultLinuxArch (system: let
-    pkgs = import nixpkgs {
-      inherit system;
+  outputs = { self, nixpkgs, tools, fenix, advisory-db, ... } @ inputs: tools.eachDefaultLinuxArch (system: let
+    lib  = nixpkgs.lib;
+    pkgs = import nixpkgs { inherit system; };
 
-      overlays = [ cargo2nix.overlays.default ];
+    toolchain = fenix.packages.${system}.complete.withComponents [
+      "cargo"
+      "clippy"
+      "rust-src"
+      "rustc"
+      "rustfmt"
+    ];
+
+    crane = inputs.crane.lib.${system}.overrideToolchain toolchain;
+
+    cssFilter   = path: type: builtins.match ".*css$" path != null;
+    jsFilter    = path: type: builtins.match ".*js$" path != null;
+    assetFilter = path: type: type == "directory" && builtins.match "^assets.*" path != null;
+
+    src = lib.cleanSourceWith {
+      src    = crane.path ./.;
+      filter = path: type: (crane.filterCargoSources path type)
+        || (cssFilter   path type)
+        || (jsFilter    path type)
+        || (assetFilter path type);
     };
 
-    rustPackages = pkgs.rustBuilder.makePackageSet {
-      rustVersion = "1.76.0";
-      rustChannel = "nightly";
-      rustProfile = "minimal";
-      packageFun  = import ./Cargo.nix;
+    srcArgs = {
+      inherit src;
     };
+
+    commonArgs = srcArgs // {
+      strictDeps = true;
+    };
+
+    cargoArtifacts = crane.buildDepsOnly commonArgs;
+
+    site = crane.buildPackage (commonArgs // {
+      inherit cargoArtifacts;
+    });
   in {
-    devShells.${system}.default = rustPackages.workspaceShell {
-      packages = [ cargo2nix.packages.${system}.default ];
+    devShells.${system}.default = crane.devShell {};
+
+    checks.${system} = {
+      inherit site;
+
+      clippy = crane.cargoClippy (commonArgs // {
+        inherit cargoArtifacts;
+
+        cargoClippyExtraArgs = "--all-targets -- --deny warnings";
+      });
+
+      fmt = crane.cargoFmt srcArgs;
+
+      audit = crane.cargoAudit (srcArgs // {
+        inherit advisory-db;
+      });
+
+      deny = crane.cargoDeny srcArgs;
     };
 
-    packages = rec {
-      site    = rustPackages.workspace.site {};
+    packages.${system} = {
+      inherit site;
+
       default = site;
     };
 

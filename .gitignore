@@ -2,7 +2,6 @@
 
 !src/
 
-!.gitattributes
 !.gitignore
 
 !*.css
