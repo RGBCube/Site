@@ -27,7 +27,7 @@ impl Render for Js {
             Self::Owned(content) => {
                 html! {
                     script {
-                        (minify::js(content))
+                        (PreEscaped(minify::js(content)))
                     }
                 }
             },
@@ -61,7 +61,7 @@ impl Render for Css {
             Self::Owned(content) => {
                 html! {
                     style {
-                        (minify::css(content))
+                        (PreEscaped(minify::css(content)))
                     }
                 }
             },
