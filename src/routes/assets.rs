@@ -59,14 +59,14 @@ static ASSETS: LazyLock<HashMap<String, Bytes>> = LazyLock::new(|| {
     assets
 });
 
-#[get("/assets/{name}")]
-pub async fn handler(name: web::Path<String>) -> HttpResponse {
-    let name = name.into_inner();
+#[get("/assets/{path}")]
+pub async fn handler(path: web::Path<String>) -> HttpResponse {
+    let path = path.into_inner();
 
-    if let Some(body) = ASSETS.get(&name) {
+    if let Some(body) = ASSETS.get(&path) {
         HttpResponse::Ok()
             .content_type(
-                mime_guess::from_path(&name)
+                mime_guess::from_path(&path)
                     .first_or_octet_stream()
                     .essence_str(),
             )
