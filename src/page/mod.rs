@@ -1,42 +1,31 @@
+pub mod cube;
+mod elements;
+
 use std::sync::LazyLock;
 
 use anyhow::Context;
 use cargo_toml::Manifest;
+pub use elements::*;
 use maud::{
     html,
     Markup,
     DOCTYPE,
 };
 
+use crate::asset;
+
 static MANIFEST: LazyLock<Manifest> = LazyLock::new(|| {
     Manifest::from_str(&embed::string!("../../Cargo.toml"))
-        .with_context(|| "Failed to deserialize Cargo manifest.")
+        .with_context(|| "Failed to deserialize Cargo manifest")
         .unwrap()
 });
-
-fn property(name: &str, content: &str) -> Markup {
-    html! {
-        meta property=(name) content=(content);
-    }
-}
-
-fn pname(name: &str, content: &str) -> Markup {
-    html! {
-        meta name=(name) content=(content);
-    }
-}
-
-/// Creates an asset URL from the given asset path.
-pub(crate) fn asset(path: &str) -> String {
-    format!("/assets/{path}")
-}
 
 /// Creates a page with the given head and body.
 ///
 /// This is the most low level function for page creation
 /// as all pages use this, as this function provides the
 /// page title, OpenGraph and other information.
-pub(crate) fn create(head: Markup, body: Markup) -> Markup {
+pub fn create(head: Markup, body: Markup) -> Markup {
     html! {
         (DOCTYPE)
 
@@ -58,9 +47,9 @@ pub(crate) fn create(head: Markup, body: Markup) -> Markup {
             (pname("description", description))
             (property("og:description", description))
 
-            link rel="icon" href=(asset("icon.gif")) type="image/gif";
+            link rel="icon" href=(asset::File("icon.gif")) type="image/gif";
 
-            (property("og:image", &asset("thumbnail.png")))
+            (property("og:image", &asset::File("thumbnail.png").to_string()))
             (property("og:image:type", "image/png"))
             (property("og:image:height", "1080"))
             (property("og:image:width", "600"))

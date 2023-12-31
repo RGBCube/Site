@@ -1,10 +1,14 @@
 #![feature(lazy_cell)]
 
+mod asset;
+mod errors;
+mod minify;
 mod page;
-// mod routes;
+mod routes;
 
 use actix_web::{
     main as async_main,
+    middleware,
     App,
     HttpServer,
 };
@@ -31,12 +35,17 @@ async fn main() -> anyhow::Result<()> {
         .target(env_logger::Target::Stdout)
         .init();
 
-    HttpServer::new(App::new) //|| App::new().route(routes::index))
-        .bind(("0.0.0.0", args.port))
-        .with_context(|| format!("Failed to bind to 0.0.0.0:{port}", port = args.port))?
-        .run()
-        .await
-        .with_context(|| "Failed to run HttpServer")?;
+    HttpServer::new(|| {
+        App::new()
+            .wrap(middleware::Logger::default())
+            .wrap(errors::handler())
+            .service(routes::handler())
+    })
+    .bind(("0.0.0.0", args.port))
+    .with_context(|| format!("Failed to bind to 0.0.0.0:{}", args.port))?
+    .run()
+    .await
+    .with_context(|| "Failed to run HttpServer")?;
 
     Ok(())
 }

@@ -1,0 +1,108 @@
+@font-face {
+  font-family: "Bai Jamjuree";
+  font-weight: 700;
+  src: url("/assets/BaiJamjuree700.woff2") format("woff2");
+}
+
+body,
+html {
+  height: 100%;
+  margin: 0;
+}
+
+html {
+  background-color: #000000;
+  font-family: "Bai Jamjuree", sans;
+  font-size: 450%;
+
+  overscroll-behavior: none;
+}
+
+@media screen and (max-width: 400px) {
+  html {
+    font-size: 200%;
+  }
+}
+
+@media screen and (max-width: 800px) and (min-width: 400px) {
+  html {
+    font-size: 300%;
+  }
+}
+
+a {
+  color: #000000;
+  text-decoration-line: none;
+}
+
+.frame {
+  background-color: #FFFFFF;
+
+  width: min-content;
+
+  padding: 0 .3em;
+  border-radius: 1em;
+
+  user-select: none;
+}
+
+.scene {
+  height: 100%;
+  width: 100%;
+  perspective: 15em;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+}
+
+.cube {
+  height: 5em;
+  width: 5em;
+
+  position: relative;
+
+  transform: translateZ(-2.498em);
+  transform-style: preserve-3d;
+}
+
+.face {
+  background-size: cover;
+  background-position: center;
+
+  width: 5em;
+  height: 5em;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+}
+
+.front {
+  transform: rotateY(0deg) translateZ(2.498em);
+}
+
+.top {
+  /* Guess what? Yeah, you guessed right. Safari can't render shit. */
+  transform: rotateX(89.99999999999999deg) translateZ(2.498em);
+}
+
+.back {
+  transform: rotateY(180deg) translateZ(2.498em);
+}
+
+.bottom {
+  transform: rotateX(-89.99999999999999deg) translateZ(2.498em);
+}
+
+.right {
+  transform: rotateY(89.99999999999999deg) translateZ(2.498em);
+}
+
+.left {
+  transform: rotateY(-89.99999999999999deg) translateZ(2.498em);
+}
