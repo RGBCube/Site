@@ -26,12 +26,7 @@ static ASSETS: LazyLock<HashMap<String, Bytes>> = LazyLock::new(|| {
     let mut assets = HashMap::new();
 
     for entry in archive.entries().unwrap() {
-        let mut entry = if let Ok(entry) = entry {
-            entry
-        } else {
-            log::error!("fail");
-            continue;
-        };
+        let mut entry = entry.unwrap();
 
         let path = entry.path_bytes();
         let path = String::from_utf8(path.to_vec()).unwrap();
