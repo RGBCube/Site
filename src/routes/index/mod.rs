@@ -22,7 +22,7 @@ pub async fn handler() -> actix_web::Result<Markup> {
               }
             },
             html! {
-              a href="/github" {
+              a href="https://github.com/RGBCube" {
                 div class="frame" {
                   "github"
                 }
