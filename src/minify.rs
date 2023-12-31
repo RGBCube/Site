@@ -22,7 +22,7 @@ pub fn is_minifiable(path: &str) -> bool {
 }
 
 pub fn insert_min(path: &str) -> String {
-    match path.rsplit_once(".") {
+    match path.rsplit_once('.') {
         Some((base, extension)) => format!("{base}.min.{extension}"),
         None => format!("{path}.min"),
     }

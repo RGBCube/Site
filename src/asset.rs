@@ -8,7 +8,7 @@ use maud::{
 use crate::minify;
 
 pub fn extension_of(path: &str) -> Option<&str> {
-    path.rsplit_once(".").map(|(_base, extension)| extension)
+    path.rsplit_once('.').map(|(_base, extension)| extension)
 }
 
 pub enum Js {

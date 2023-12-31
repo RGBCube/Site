@@ -31,17 +31,17 @@ static ASSETS: LazyLock<HashMap<String, Bytes>> = LazyLock::new(|| {
         let path = entry.path_bytes();
         let path = String::from_utf8(path.to_vec()).unwrap();
 
-        if path.ends_with("/") || !ASSET_EXTENSIONS.iter().any(|ext| path.ends_with(ext)) {
+        if path.ends_with('/') || !ASSET_EXTENSIONS.iter().any(|ext| path.ends_with(ext)) {
             continue;
         }
 
-        let path = path.rsplit_once("/").unwrap_or(("", &path)).1;
+        let path = path.rsplit_once('/').unwrap_or(("", &path)).1;
 
         let mut content = Vec::new();
         entry.read_to_end(&mut content).unwrap();
 
-        if minify::is_minifiable(&path) {
-            let content = minify::generic(&path, &content);
+        if minify::is_minifiable(path) {
+            let content = minify::generic(path, &content);
 
             log::info!("Minifying asset {path}");
             assets.insert(minify::insert_min(path), Bytes::from(content));
