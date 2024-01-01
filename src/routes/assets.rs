@@ -20,35 +20,27 @@ use crate::minify;
 const ASSET_EXTENSIONS: &[&str] = &[".js", ".css", ".woff2", ".gif"];
 
 static ASSETS: LazyLock<HashMap<String, Bytes>> = LazyLock::new(|| {
-    let contents = embed::bytes!("../../src.tar");
-    let mut archive = Archive::new(Cursor::new(contents));
-
     let mut assets = HashMap::new();
 
-    for entry in archive.entries().unwrap() {
-        let mut entry = entry.unwrap();
+    for file in embed::dir!("../..").flatten() {
+        let path = file.path.file_name().unwrap().to_str().unwrap();
 
-        let path = entry.path_bytes();
-        let path = String::from_utf8(path.to_vec()).unwrap();
-
-        if path.ends_with('/') || !ASSET_EXTENSIONS.iter().any(|ext| path.ends_with(ext)) {
+        if !ASSET_EXTENSIONS
+            .iter()
+            .any(|extension| path.ends_with(extension))
+        {
             continue;
         }
 
-        let path = path.rsplit_once('/').unwrap_or(("", &path)).1;
-
-        let mut content = Vec::new();
-        entry.read_to_end(&mut content).unwrap();
-
         if minify::is_minifiable(path) {
-            let content = minify::generic(path, &content);
+            let content = minify::generic(path, &file.content);
 
             log::info!("Minifying asset {path}");
             assets.insert(minify::insert_min(path), Bytes::from(content));
         }
 
         log::info!("Adding asset {path}");
-        assets.insert(path.to_string(), Bytes::from(content));
+        assets.insert(path.to_string(), Bytes::from(file.content));
     }
 
     assets
