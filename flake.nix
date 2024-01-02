@@ -35,7 +35,6 @@
 
   outputs = { self, nixpkgs, tools, fenix, advisory-db, ... } @ inputs: tools.eachDefaultLinuxArch (system: let
     lib  = nixpkgs.lib;
-    pkgs = import nixpkgs { inherit system; };
 
     toolchain = fenix.packages.${system}.complete.withComponents [
       "cargo"
@@ -140,7 +139,7 @@
 
           serviceConfig = let
             needsPrivilidges = cfg.port < 1024;
-            capabilities     = [ "" ] ++ optionals needsPrivileges [ "CAP_NET_BIND_SERVICE" ];
+            capabilities     = [ "" ] ++ optionals needsPrivilidges [ "CAP_NET_BIND_SERVICE" ];
             rootDirectory    = "/run/site";
           in {
             ExecStart               = "${self.packages.${pkgs.system}.site}/bin/site --port ${cfg.port} --log-level ${cfg.logLevel}";
