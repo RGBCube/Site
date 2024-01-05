@@ -22,7 +22,9 @@ pub fn handler<B: 'static>(
             asset::Css::Shared("not-found.css"),
             array::from_fn(|_| {
                 (html! {
-                   .frame { "404" }
+                   .frame {
+                        a href="/" { "404" }
+                    }
                    .square .black {}
                    .square .magenta {}
                    .square .magenta {}

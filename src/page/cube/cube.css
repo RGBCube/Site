@@ -1,28 +1,11 @@
 html {
-  font-size: 450%;
+  font-size: min(9vw, 9vh, 4.5em);
   overscroll-behavior: none;
 }
 
-@media screen and (max-width: 400px) {
-  html {
-    font-size: 200%;
-  }
-}
-
-@media screen and (max-width: 800px) and (min-width: 400px) {
-  html {
-    font-size: 300%;
-  }
-}
-
 a {
-  /* Black on a white background. */
   color: black;
-}
-
-a:hover {
-  /* The frame changes color only. */
-  color: black;
+  font-weight: bold;
 }
 
 .frame {
@@ -34,6 +17,10 @@ a:hover {
   border-radius: 1em;
 
   user-select: none;
+}
+
+.frame:hover {
+  background-color: yellow;
 }
 
 .scene {

@@ -26,12 +26,20 @@ nav {
 
 nav a {
   color: black;
-  font-style: normal;
+  font-weight: bold;
   margin-right: .6em;
 }
 
 nav a:last-child {
   margin-right: 0;
+}
+
+a {
+  color: yellow;
+}
+
+a:hover {
+  font-style: italic;
 }
 
 footer {

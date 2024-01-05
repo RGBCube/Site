@@ -2,14 +2,14 @@
   font-display: block;
   font-family: "BaiJam";
   font-weight: normal;
-  src: url("/assets/BaiJamjureeMedium.woff2");
+  src: url("/assets/BaiJamjureeMedium.woff2") format("woff2");
 }
 
 @font-face {
   font-display: block;
   font-family: "BaiJam";
   font-weight: bold;
-  src: url("/assets/BaiJamjureeBold.woff2");
+  src: url("/assets/BaiJamjureeBold.woff2") format("woff2");
 }
 
 html {
@@ -25,11 +25,5 @@ html {
 }
 
 a {
-  color: yellow;
-  font-weight: bold;
   text-decoration-line: none;
-}
-
-a:hover {
-  font-style: italic;
 }

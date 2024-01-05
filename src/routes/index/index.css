@@ -1,11 +1,3 @@
-a:hover {
-  font-style: normal;
-}
-
-.frame:hover {
-  background-color: yellow;
-}
-
 .face::after {
   z-index: -1;
 
