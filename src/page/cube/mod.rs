@@ -19,10 +19,10 @@ pub fn create(css: Css, faces: [Markup; 6]) -> Markup {
             (css)
         },
         html! {
-            div class="scene" {
-                div class="cube" {
+            .scene {
+                .cube {
                     @for (name, content) in ["front", "top", "back", "bottom", "right", "left"].iter().zip(faces) {
-                        div class=(format!("face {name}")) {
+                        .(format!("face {name}")) {
                             (content)
                         }
                     }

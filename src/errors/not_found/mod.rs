@@ -21,11 +21,11 @@ pub fn handler<B: 'static>(
             asset::Css::Shared("not-found.css"),
             array::from_fn(|_| {
                 (html! {
-                   div class="frame" { "404" }
-                   div class="square black" {}
-                   div class="square magenta" {}
-                   div class="square magenta" {}
-                   div class="square black" {}
+                   .frame { "404" }
+                   .square .black {}
+                   .square .magenta {}
+                   .square .magenta {}
+                   .square .black {}
                 })
                 .clone()
             }),

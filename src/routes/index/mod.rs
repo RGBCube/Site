@@ -15,23 +15,35 @@ pub async fn handler() -> actix_web::Result<Markup> {
         asset::css::owned!("index.css"),
         [
             html! {
-              a href="/contact" {
-                div class="frame" {
-                  "contact"
+                a href="/about" {
+                    .frame {
+                        "about"
+                    }
                 }
-              }
             },
             html! {
-              a href="https://github.com/RGBCube" {
-                div class="frame" {
-                  "github"
+                a href="https://github.com/RGBCube" {
+                    .frame {
+                        "github"
+                    }
                 }
-              }
             },
             html! {},
             html! {},
-            html! {},
-            html! {},
+            html! {
+                a href="/contact" {
+                    .frame {
+                        "contact"
+                    }
+                }
+            },
+            html! {
+                a href="/blog" {
+                    .frame {
+                        "blog"
+                    }
+                }
+            },
         ],
     ))
 }
