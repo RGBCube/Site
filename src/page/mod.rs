@@ -1,5 +1,6 @@
 pub mod cube;
 mod elements;
+pub mod text;
 
 use std::sync::LazyLock;
 
@@ -14,11 +15,20 @@ use maud::{
 
 use crate::asset;
 
-static MANIFEST: LazyLock<Manifest> = LazyLock::new(|| {
+pub static MANIFEST: LazyLock<Manifest> = LazyLock::new(|| {
     Manifest::from_str(&embed::string!("../../Cargo.toml"))
         .with_context(|| "Failed to deserialize Cargo manifest")
         .unwrap()
 });
+
+/// Enum used to incidate which page we are on.
+pub enum Page {
+    Home,
+    About,
+    Blog,
+    Contact,
+    Other,
+}
 
 /// Creates a page with the given head and body.
 ///
@@ -58,6 +68,7 @@ pub fn create(head: Markup, body: Markup) -> Markup {
             (property("og:url", url))
             link rel="canonical" href=(url);
 
+            (asset::Css::Shared("page.css"))
             (head)
         }
 

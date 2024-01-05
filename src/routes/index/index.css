@@ -13,6 +13,8 @@
   position: absolute;
 }
 
+/* I do not regret writing this. It's beautiful. */
+
 .front {
   background: linear-gradient(to bottom, cyan, blue);
 }

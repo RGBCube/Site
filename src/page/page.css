@@ -1,0 +1,19 @@
+@font-face {
+  font-display: block;
+  font-family: "BaiJam";
+  font-weight: normal;
+  src: url("/assets/BaiJamjureeMedium.woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "BaiJam";
+  font-weight: bold;
+  src: url("/assets/BaiJamjureeBold.woff2");
+}
+
+html {
+  background-color: #000000;
+  color: #FFFFFF;
+  font-family: "BaiJam";
+}

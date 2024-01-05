@@ -1,9 +1,3 @@
-@font-face {
-  font-family: "Bai Jamjuree";
-  font-weight: 700;
-  src: url("/assets/BaiJamjuree700.woff2") format("woff2");
-}
-
 body,
 html {
   height: 100%;
@@ -11,10 +5,7 @@ html {
 }
 
 html {
-  background-color: #000000;
-  font-family: "Bai Jamjuree", sans;
   font-size: 450%;
-
   overscroll-behavior: none;
 }
 
@@ -31,7 +22,9 @@ html {
 }
 
 a {
+  /* Black on a white background */
   color: #000000;
+  font-weight: bold;
   text-decoration-line: none;
 }
 
