@@ -15,7 +15,7 @@ body {
 }
 
 nav {
-  font-size: 150%;
+  font-size: large;
 
   background-color: white;
   padding: .3em .6em;
@@ -43,5 +43,10 @@ a:hover {
 }
 
 footer {
+  border-top: .15em solid white;
+  display: flex;
+  font-size: small;
+  justify-content: center;
   margin-bottom: 3em;
+  padding-top: .5em;
 }

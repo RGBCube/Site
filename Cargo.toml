@@ -9,17 +9,19 @@ repositoty  = "https://github.com/RGBCube/rgbcube.github.io"
 edition     = "2021"
 
 [dependencies]
-actix-web    = "4.4.1"
-anyhow       = "1.0.77"
-bytes        = "1.5.0"
-cargo_toml   = "0.17.2"
-clap         = { version = "4.4.12", features = [ "derive" ] }
-embed        = { git = "https://github.com/RGBCube/embed-rs" }
-env_logger   = "0.10.1"
-log          = { version = "0.4.20", features = [ "serde" ] }
-maud         = { version = "0.25.0", features = [ "actix-web" ] }
-mime_guess   = "2.0.4"
-minify-js    = "0.6.0"
+actix-web      = "4.4.1"
+anyhow         = "1.0.77"
+bytes          = "1.5.0"
+cargo_toml     = "0.17.2"
+chrono         = "0.4.31"
+clap           = { version = "4.4.12", features = [ "derive" ] }
+embed          = { git = "https://github.com/RGBCube/embed-rs" }
+env_logger     = "0.10.1"
+log            = { version = "0.4.20", features = [ "serde" ] }
+maud           = { version = "0.25.0", features = [ "actix-web" ] }
+mime_guess     = "2.0.4"
+minify-js      = "0.6.0"
+pulldown-cmark = "0.9.3"
 
 [patch.crates-io]
 proc-macro2 = { git = "https://github.com/RGBCube/proc-macro2" }

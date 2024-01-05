@@ -1,8 +1,7 @@
-use std::{
-    env,
-    path::PathBuf,
+use chrono::{
+    Datelike,
+    Local,
 };
-
 use maud::{
     html,
     Markup,
@@ -21,7 +20,7 @@ pub fn create(title: Option<&str>, page: Page, body: Markup) -> Markup {
             (asset::Css::Shared("text.css"))
             (asset::Css::Owned(format!(r"
                 .{page} {{
-                    font-style: italic !important;
+                    font-style: italic;
                 }}
             ", page = page.as_str())))
         },
@@ -37,8 +36,9 @@ pub fn create(title: Option<&str>, page: Page, body: Markup) -> Markup {
                 (body)
 
                 footer {
-                    "Served by "
-                    (env::current_exe().unwrap_or_else(|_| PathBuf::from("the toaster in my bathtub")).display())
+                    "Copyright © "
+                    (Local::now().year())
+                    " RGBCube"
                 }
             }
         },

@@ -2,6 +2,7 @@
 
 mod asset;
 mod errors;
+mod markdown;
 mod minify;
 mod page;
 mod routes;
