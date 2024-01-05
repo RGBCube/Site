@@ -18,7 +18,7 @@ const ASSET_EXTENSIONS: &[&str] = &[".js", ".css", ".woff2", ".gif"];
 static ASSETS: LazyLock<HashMap<String, Bytes>> = LazyLock::new(|| {
     let mut assets = HashMap::new();
 
-    for file in embed::dir!("../..").flatten() {
+    for file in embed::dir!("..").flatten() {
         let path = Path::new(file.path().as_ref())
             .file_name()
             .unwrap()
