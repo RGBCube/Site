@@ -14,26 +14,32 @@ use crate::page::{
 };
 
 /// Creates a simple text page.
-pub fn create(page: Page, title: &str, body: Markup) -> Markup {
+pub fn create(title: Option<&str>, page: Page, body: Markup) -> Markup {
     crate::page::create(
+        title,
         html! {
             (asset::Css::Shared("text.css"))
+            (asset::Css::Owned(format!(r"
+                .{page} {{
+                    font-style: italic !important;
+                }}
+            ", page = page.as_str())))
         },
         html! {
-            nav {
-                a href="/" { "HOME" }
-                a href="/about" { "ABOUT" }
-                a href="/blog" { "BLOG" }
-                a href="/contact" { "CONTACT" }
+            .not-flex {
+                nav {
+                    a.home href="/" { "HOME" }
+                    a.about href="/about" { "ABOUT" }
+                    a.blog href="/blog" { "BLOG" }
+                    a.contact href="/contact" { "CONTACT" }
+                }
 
-                span.title { (title) }
-            }
+                (body)
 
-            (body)
-
-            footer {
-                "Served by "
-                (env::current_exe().unwrap_or_else(|_| PathBuf::from("asd")).display())
+                footer {
+                    "Served by "
+                    (env::current_exe().unwrap_or_else(|_| PathBuf::from("the toaster in my bathtub")).display())
+                }
             }
         },
     )

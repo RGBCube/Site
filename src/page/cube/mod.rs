@@ -12,8 +12,9 @@ use crate::{
 /// order of the faces are as so:
 ///
 /// front, top, back, bottom, right, left.
-pub fn create(css: Css, faces: [Markup; 6]) -> Markup {
+pub fn create(title: Option<&str>, css: Css, faces: [Markup; 6]) -> Markup {
     crate::page::create(
+        title,
         html! {
             (asset::Css::Shared("cube.css"))
             (css)

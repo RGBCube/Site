@@ -18,6 +18,7 @@ pub fn handler<B: 'static>(
 
     let response = response.set_body(
         cube::create(
+            Some("404"),
             asset::Css::Shared("not-found.css"),
             array::from_fn(|_| {
                 (html! {

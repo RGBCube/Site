@@ -1,4 +1,4 @@
-// mod about;
+mod about;
 mod assets;
 mod index;
 
@@ -10,6 +10,6 @@ use actix_web::{
 pub fn handler() -> Scope {
     web::scope("")
         .service(index::handler)
-        // .service(about::handler)
+        .service(about::handler)
         .service(assets::handler)
 }

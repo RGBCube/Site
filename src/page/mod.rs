@@ -30,12 +30,23 @@ pub enum Page {
     Other,
 }
 
+impl Page {
+    pub fn as_str(self) -> &'static str {
+        match self {
+            Self::Home => "home",
+            Self::About => "about",
+            Self::Blog => "blog",
+            Self::Contact => "contact",
+            Self::Other => "other",
+        }
+    }
+}
 /// Creates a page with the given head and body.
 ///
 /// This is the most low level function for page creation
 /// as all pages use this, as this function provides the
 /// page title, OpenGraph and other information.
-pub fn create(head: Markup, body: Markup) -> Markup {
+pub fn create(title: Option<&str>, head: Markup, body: Markup) -> Markup {
     html! {
         (DOCTYPE)
 
@@ -47,7 +58,13 @@ pub fn create(head: Markup, body: Markup) -> Markup {
 
             @let name = &MANIFEST.package.as_ref().unwrap().authors()[0];
 
-            title { (name) }
+            title { ({
+                if let Some(title) = title {
+                    format!("{title} - {name}")
+                } else {
+                    name.clone()
+                }
+            }) }
             (pname("author", name))
 
             (property("og:site_name", name))

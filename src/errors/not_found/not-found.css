@@ -1,8 +1,12 @@
+html {
+  font-weight: bold;
+}
+
 .face {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  box-shadow: 0 0 10px #AAAAAA;
+  box-shadow: 0 0 10px whitesmoke;
 }
 
 .square {

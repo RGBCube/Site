@@ -12,6 +12,7 @@ use crate::{
 #[get("/")]
 pub async fn handler() -> actix_web::Result<Markup> {
     Ok(cube::create(
+        None,
         asset::css::owned!("index.css"),
         [
             html! {

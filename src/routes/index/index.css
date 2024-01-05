@@ -1,5 +1,9 @@
+a:hover {
+  font-style: normal;
+}
+
 .frame:hover {
-  background-color: #FFFF00;
+  background-color: yellow;
 }
 
 .face::after {
