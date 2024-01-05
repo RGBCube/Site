@@ -20,7 +20,9 @@ log          = { version = "0.4.20", features = [ "serde" ] }
 maud         = { version = "0.25.0", features = [ "actix-web" ] }
 mime_guess   = "2.0.4"
 minify-js    = "0.6.0"
-tar          = "0.4.40"
+
+[patch.crates-io]
+proc-macro2 = { git = "https://github.com/RGBCube/proc-macro2" }
 
 [build]
 incremental = true

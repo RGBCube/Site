@@ -38,7 +38,7 @@ impl Render for Js {
 pub mod js {
     macro_rules! owned {
         ($path:literal) => {
-            crate::asset::Js::Owned(::embed::string!($path))
+            crate::asset::Js::Owned(::embed::string!($path).to_string())
         };
     }
 

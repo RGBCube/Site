@@ -1,9 +1,6 @@
 use std::{
     collections::HashMap,
-    io::{
-        Cursor,
-        Read,
-    },
+    path::Path,
     sync::LazyLock,
 };
 
@@ -13,7 +10,6 @@ use actix_web::{
     HttpResponse,
 };
 use bytes::Bytes;
-use tar::Archive;
 
 use crate::minify;
 
@@ -23,7 +19,11 @@ static ASSETS: LazyLock<HashMap<String, Bytes>> = LazyLock::new(|| {
     let mut assets = HashMap::new();
 
     for file in embed::dir!("../..").flatten() {
-        let path = file.path.file_name().unwrap().to_str().unwrap();
+        let path = Path::new(file.path().as_ref())
+            .file_name()
+            .unwrap()
+            .to_str()
+            .unwrap();
 
         if !ASSET_EXTENSIONS
             .iter()
@@ -33,14 +33,14 @@ static ASSETS: LazyLock<HashMap<String, Bytes>> = LazyLock::new(|| {
         }
 
         if minify::is_minifiable(path) {
-            let content = minify::generic(path, &file.content);
+            let content = minify::generic(path, file.content());
 
             log::info!("Minifying asset {path}");
             assets.insert(minify::insert_min(path), Bytes::from(content));
         }
 
         log::info!("Adding asset {path}");
-        assets.insert(path.to_string(), Bytes::from(file.content));
+        assets.insert(path.to_string(), Bytes::from(file.content().to_vec()));
     }
 
     assets
