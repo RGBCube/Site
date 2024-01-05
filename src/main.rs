@@ -33,6 +33,7 @@ async fn main() -> anyhow::Result<()> {
     env_logger::builder()
         .filter_level(args.log_level)
         .target(env_logger::Target::Stdout)
+        .format_timestamp(None)
         .init();
 
     HttpServer::new(|| {
