@@ -2,8 +2,6 @@
 
 !src/
 !src/errors/
-!src/errors/internal_server_error/
-!src/errors/not_found/
 !src/page/
 !src/page/cube/
 !src/page/text/
