@@ -1,3 +1,5 @@
+use std::borrow::Cow;
+
 use maud::{
     html,
     Markup,
@@ -13,7 +15,8 @@ pub fn extension_of(path: &str) -> Option<&str> {
 
 pub enum Js {
     Shared(&'static str),
-    Owned(String),
+    #[allow(dead_code)]
+    Owned(Cow<'static, str>),
 }
 
 impl Render for Js {
@@ -36,18 +39,20 @@ impl Render for Js {
 }
 
 pub mod js {
+    #[allow(unused_macros)]
     macro_rules! owned {
         ($path:literal) => {
-            crate::asset::Js::Owned(::embed::string!($path).to_string())
+            crate::asset::Js::Owned(::embed::string!($path))
         };
     }
 
+    #[allow(unused_imports)]
     pub(crate) use owned;
 }
 
 pub enum Css {
     Shared(&'static str),
-    Owned(String),
+    Owned(Cow<'static, str>),
 }
 
 impl Render for Css {
@@ -72,7 +77,7 @@ impl Render for Css {
 pub mod css {
     macro_rules! owned {
         ($path:literal) => {
-            crate::asset::Css::Owned(::embed::string!($path).to_string())
+            crate::asset::Css::Owned(::embed::string!($path))
         };
     }
 

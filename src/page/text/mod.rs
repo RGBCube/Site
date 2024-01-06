@@ -22,7 +22,7 @@ pub fn create(title: Option<&str>, page: Page, body: Markup) -> Markup {
                 .{page} {{
                     font-style: italic;
                 }}
-            ", page = page.as_str())))
+            ", page = page.as_str()).into()))
         },
         html! {
             .not-flex {

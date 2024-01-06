@@ -22,6 +22,7 @@ pub static MANIFEST: LazyLock<Manifest> = LazyLock::new(|| {
 });
 
 /// Enum used to incidate which page we are on.
+#[allow(dead_code)]
 pub enum Page {
     Home,
     About,
