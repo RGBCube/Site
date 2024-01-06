@@ -9,7 +9,7 @@ repositoty  = "https://github.com/RGBCube/rgbcube.github.io"
 edition     = "2021"
 
 [dependencies]
-actix-web      = "4.4.1"
+actix-web      = { version = "4.4.1", features = [ "rustls-0_21" ] }
 anyhow         = "1.0.77"
 bytes          = "1.5.0"
 cargo_toml     = "0.17.2"
@@ -22,6 +22,8 @@ maud           = { version = "0.25.0", features = [ "actix-web" ] }
 mime_guess     = "2.0.4"
 minify-js      = "0.6.0"
 pulldown-cmark = "0.9.3"
+rustls         = "0.21"
+rustls-pemfile = "2.0.0"
 
 [patch.crates-io]
 proc-macro2 = { git = "https://github.com/RGBCube/proc-macro2" }
