@@ -7,11 +7,7 @@ mod minify;
 mod page;
 mod routes;
 
-use std::{
-    fs::File,
-    io::BufReader,
-    path::PathBuf,
-};
+use std::path::PathBuf;
 
 use actix_web::{
     main as async_main,
@@ -21,14 +17,10 @@ use actix_web::{
 };
 use anyhow::Context;
 use clap::Parser;
-use rustls::{
-    Certificate,
-    PrivateKey,
-    ServerConfig,
-};
-use rustls_pemfile::{
-    certs,
-    pkcs8_private_keys,
+use openssl::ssl::{
+    SslAcceptor,
+    SslFiletype,
+    SslMethod,
 };
 
 #[derive(Parser)]
@@ -69,34 +61,16 @@ async fn main() -> anyhow::Result<()> {
     let server = if let Some(certificate_path) = args.certificate
         && let Some(key_path) = args.key
     {
-        let certificates = certs(&mut BufReader::new(
-            File::open(&certificate_path).with_context(|| {
-                format!(
-                    "Failed to open certificate file at {}",
-                    certificate_path.display()
-                )
-            })?,
-        ))
-        .unwrap()
-        .into_iter()
-        .map(Certificate)
-        .collect();
+        let mut builder = SslAcceptor::mozilla_intermediate_v5(SslMethod::tls()).unwrap();
 
-        let mut keys = pkcs8_private_keys(&mut BufReader::new(
-            File::open(&key_path)
-                .with_context(|| format!("Failed to open key file at {}", key_path.display()))?,
-        ))
-        .unwrap()
-        .into_iter()
-        .map(PrivateKey);
-
-        let tls_config = ServerConfig::builder()
-            .with_safe_defaults()
-            .with_no_client_auth()
-            .with_single_cert(certificates, keys.next().unwrap())
+        builder
+            .set_private_key_file(key_path, SslFiletype::PEM)
+            .unwrap();
+        builder
+            .set_certificate_chain_file(certificate_path)
             .unwrap();
 
-        server.bind_rustls_021(("0.0.0.0", args.port), tls_config)
+        server.bind_openssl(("0.0.0.0", args.port), builder)
     } else {
         server.bind(("0.0.0.0", args.port))
     };
