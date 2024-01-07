@@ -22,12 +22,13 @@ use actix_web::{
 use anyhow::Context;
 use clap::Parser;
 use rustls::{
-    pki_types::PrivateKeyDer,
+    Certificate,
+    PrivateKey,
     ServerConfig,
 };
 use rustls_pemfile::{
     certs,
-    rsa_private_keys,
+    pkcs8_private_keys,
 };
 
 #[derive(Parser)]
@@ -69,28 +70,33 @@ async fn main() -> anyhow::Result<()> {
         && let Some(key_path) = args.key
     {
         let certificates = certs(&mut BufReader::new(
-            File::open(certificate_path).with_context(|| {
+            File::open(&certificate_path).with_context(|| {
                 format!(
                     "Failed to open certificate file at {}",
                     certificate_path.display()
                 )
             })?,
-        ));
+        ))
+        .unwrap()
+        .into_iter()
+        .map(Certificate)
+        .collect();
 
-        let mut keys = rsa_private_keys(&mut BufReader::new(
-            File::open(key_path)
+        let mut keys = pkcs8_private_keys(&mut BufReader::new(
+            File::open(&key_path)
                 .with_context(|| format!("Failed to open key file at {}", key_path.display()))?,
-        ));
+        ))
+        .unwrap()
+        .into_iter()
+        .map(PrivateKey);
 
         let tls_config = ServerConfig::builder()
+            .with_safe_defaults()
             .with_no_client_auth()
-            .with_single_cert(
-                certificates.try_collect::<Vec<_>>()?,
-                PrivateKeyDer::Pkcs1(keys.next().unwrap()?),
-            )
+            .with_single_cert(certificates, keys.next().unwrap())
             .unwrap();
 
-        server.bind_rustls(("0.0.0.0", args.port), tls_config)
+        server.bind_rustls_021(("0.0.0.0", args.port), tls_config)
     } else {
         server.bind(("0.0.0.0", args.port))
     };

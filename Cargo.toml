@@ -22,8 +22,8 @@ maud           = { version = "0.25.0", features = [ "actix-web" ] }
 mime_guess     = "2.0.4"
 minify-js      = "0.6.0"
 pulldown-cmark = "0.9.3"
-rustls         = "0.21"
-rustls-pemfile = "2.0.0"
+rustls         = "0.21.10"
+rustls-pemfile = "1.0.4"
 
 [patch.crates-io]
 proc-macro2 = { git = "https://github.com/RGBCube/proc-macro2" }
