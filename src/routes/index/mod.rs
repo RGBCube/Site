@@ -1,4 +1,3 @@
-use actix_web::get;
 use maud::{
     html,
     Markup,
@@ -9,9 +8,8 @@ use crate::{
     page::cube,
 };
 
-#[get("/")]
-pub async fn handler() -> actix_web::Result<Markup> {
-    Ok(cube::create(
+pub async fn handler() -> Markup {
+    cube::create(
         None,
         asset::css::owned!("index.css"),
         [
@@ -46,5 +44,5 @@ pub async fn handler() -> actix_web::Result<Markup> {
                 }
             },
         ],
-    ))
+    )
 }

@@ -1,15 +1,15 @@
+use axum::{
+    routing::get,
+    Router,
+};
+
 mod about;
 mod assets;
 mod index;
 
-use actix_web::{
-    web,
-    Scope,
-};
-
-pub fn handler() -> Scope {
-    web::scope("")
-        .service(index::handler)
-        .service(about::handler)
-        .service(assets::handler)
+pub fn router() -> Router {
+    Router::new()
+        .route("/", get(index::handler))
+        .route("/about", get(about::handler))
+        .route("/assets/*path", get(assets::handler))
 }

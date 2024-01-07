@@ -72,12 +72,7 @@
       inherit cargoArtifacts;
     });
   in {
-    devShells.${system}.default = crane.devShell {
-      packages = with nixpkgs.legacyPackages.${system}; [
-        openssl
-        pkg-config
-      ];
-    };
+    devShells.${system}.default = crane.devShell {};
 
     checks.${system} = {
       inherit site;

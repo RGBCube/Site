@@ -1,13 +1,18 @@
 use std::{
     collections::HashMap,
-    path::Path,
+    path,
     sync::LazyLock,
 };
 
-use actix_web::{
-    get,
-    web,
-    HttpResponse,
+use axum::{
+    body::Body,
+    extract::Path,
+    http::{
+        header::CONTENT_TYPE,
+        Response,
+        StatusCode,
+    },
+    response::IntoResponse,
 };
 use bytes::Bytes;
 
@@ -19,7 +24,7 @@ static ASSETS: LazyLock<HashMap<String, Bytes>> = LazyLock::new(|| {
     let mut assets = HashMap::new();
 
     for file in embed::dir!("..").flatten() {
-        let path = Path::new(file.path().as_ref())
+        let path = path::Path::new(file.path().as_ref())
             .file_name()
             .unwrap()
             .to_str()
@@ -46,19 +51,19 @@ static ASSETS: LazyLock<HashMap<String, Bytes>> = LazyLock::new(|| {
     assets
 });
 
-#[get("/assets/{path}")]
-pub async fn handler(path: web::Path<String>) -> HttpResponse {
-    let path = path.into_inner();
-
+pub async fn handler(Path(path): Path<String>) -> Response<Body> {
     if let Some(body) = ASSETS.get(&path) {
-        HttpResponse::Ok()
-            .content_type(
+        (
+            [(
+                CONTENT_TYPE,
                 mime_guess::from_path(&path)
                     .first_or_octet_stream()
                     .essence_str(),
-            )
-            .body(Bytes::clone(body))
+            )],
+            Bytes::clone(body),
+        )
+            .into_response()
     } else {
-        HttpResponse::NotFound().into()
+        StatusCode::NOT_FOUND.into_response()
     }
 }
