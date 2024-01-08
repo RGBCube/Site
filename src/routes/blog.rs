@@ -25,8 +25,7 @@ static ENTRIES: LazyLock<IndexMap<&'static str, (&'static Metadata, Markup)>> =
         IndexMap::from_iter(
             PAGES
                 .iter()
-                .sorted_by_key(|(_, value)| value.0.date)
-                .rev()
+                .sorted_by(|(_, a), (_, b)| b.0.date.cmp(&a.0.date))
                 .filter_map(|(path, (metadata, body))| {
                     if let Some(name) = path.strip_prefix("blog/") {
                         let body = html! {
