@@ -60,47 +60,49 @@ pub fn create(title: Option<&str>, head: Markup, body: Markup) -> Markup {
     html! {
         (DOCTYPE)
 
-        head {
-            meta charset="UTF-8";
+        html lang="en-US" {
+            head {
+                meta charset="UTF-8";
 
-            (pname("viewport", "width=device-width, initial-scale=1.0"))
-            (property("og:type", "website"))
+                (pname("viewport", "width=device-width, initial-scale=1.0"))
+                (property("og:type", "website"))
 
-            @let name = &MANIFEST.package.as_ref().unwrap().authors()[0];
+                @let name = &MANIFEST.package.as_ref().unwrap().authors()[0];
 
-            title { ({
-                if let Some(title) = title {
-                    format!("{title} - {name}")
-                } else {
-                    name.clone()
-                }
-            }) }
-            (pname("author", name))
+                title { ({
+                    if let Some(title) = title {
+                        format!("{title} - {name}")
+                    } else {
+                        name.clone()
+                    }
+                }) }
+                (pname("author", name))
 
-            (property("og:site_name", name))
-            (property("og:title", name))
+                (property("og:site_name", name))
+                (property("og:title", name))
 
-            @let description = MANIFEST.package.as_ref().unwrap().description().unwrap();
-            (pname("description", description))
-            (property("og:description", description))
+                @let description = MANIFEST.package.as_ref().unwrap().description().unwrap();
+                (pname("description", description))
+                (property("og:description", description))
 
-            link rel="icon" href=(asset::File("icon.gif")) type="image/gif";
+                link rel="icon" href=(asset::File("icon.gif")) type="image/gif";
 
-            (property("og:image", &asset::File("thumbnail.png").to_string()))
-            (property("og:image:type", "image/png"))
-            (property("og:image:height", "1080"))
-            (property("og:image:width", "600"))
+                (property("og:image", &asset::File("thumbnail.png").to_string()))
+                (property("og:image:type", "image/png"))
+                (property("og:image:height", "1080"))
+                (property("og:image:width", "600"))
 
-            @let url = MANIFEST.package.as_ref().unwrap().homepage().unwrap();
-            (property("og:url", url))
-            link rel="canonical" href=(url);
+                @let url = MANIFEST.package.as_ref().unwrap().homepage().unwrap();
+                (property("og:url", url))
+                link rel="canonical" href=(url);
 
-            (asset::Css::Shared("page.css"))
-            (head)
-        }
+                (asset::Css::Shared("page.css"))
+                (head)
+            }
 
-        body {
-            (body)
+            body {
+                (body)
+            }
         }
     }
 }
