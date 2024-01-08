@@ -376,7 +376,7 @@ checksum = "a26ae43d7bcc3b814de94796a5e736d4029efb0ee900c12e2d54c993ad1a1e07"
 [[package]]
 name = "embed"
 version = "0.1.0"
-source = "git+https://github.com/RGBCube/embed-rs#7c41253f4f6006fcc2aad189c19132d2f0cccec2"
+source = "git+https://github.com/RGBCube/embed-rs#d1a0e9a7931c65407a9348e980236b58595f21c6"
 dependencies = [
  "embed-macros",
 ]
@@ -384,7 +384,7 @@ dependencies = [
 [[package]]
 name = "embed-macros"
 version = "0.1.0"
-source = "git+https://github.com/RGBCube/embed-rs#7c41253f4f6006fcc2aad189c19132d2f0cccec2"
+source = "git+https://github.com/RGBCube/embed-rs#d1a0e9a7931c65407a9348e980236b58595f21c6"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -931,6 +931,14 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8b870d8c151b6f2fb93e84a13146138f05d02ed11c7e7c54f8826aaaf7c9f184"
 
 [[package]]
+name = "proc-file"
+version = "1.0.0"
+source = "git+https://github.com/RGBCube/proc-file#c514ea1841b5ca5f86ecb2fa8173879683824b36"
+dependencies = [
+ "proc-macro2",
+]
+
+[[package]]
 name = "proc-macro-error"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1222,6 +1230,7 @@ dependencies = [
  "maud",
  "mime_guess",
  "minify-js",
+ "proc-file",
  "pulldown-cmark",
  "serde",
  "serde_yaml",
@@ -1263,9 +1272,9 @@ checksum = "6980e8d7511241f8acf4aebddbb1ff938df5eebe98691418c4468d0b72a96a67"
 
 [[package]]
 name = "strsim"
-version = "0.10.1"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ccbca6f34534eb78dbee83f6b2c9442fea7113f43d9e80ea320f0972ae5dc08d"
+checksum = "73473c0e59e6d5812c5dfe2a064a6444949f089e20eec9a2e5506596494e4623"
 
 [[package]]
 name = "syn"

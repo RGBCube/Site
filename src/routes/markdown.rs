@@ -26,14 +26,14 @@ pub struct Metadata {
 }
 
 pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(|| {
-    let routes_path = path::Path::new(file!())
+    let routes_path = dbg!(path::Path::new(proc_file::file!())
         .parent()
         .unwrap()
         .canonicalize()
-        .unwrap();
+        .unwrap());
 
     HashMap::from_iter(embed::dir!(".").flatten().iter().filter_map(|file| {
-        let path = path::Path::new(file.path().as_ref())
+        let path = dbg!(path::Path::new(file.path().as_ref()))
             .strip_prefix(&routes_path)
             .unwrap()
             .to_str()
