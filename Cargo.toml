@@ -9,23 +9,23 @@ repositoty  = "https://github.com/RGBCube/rgbcube.github.io"
 edition     = "2021"
 
 [dependencies]
-anyhow         = "1.0.77"
-axum           = "0.7.3"
-axum-server    = { version = "0.6.0", features = [ "tls-rustls" ] }
-bytes          = "1.5.0"
-cargo_toml     = "0.17.2"
-chrono         = "0.4.31"
-clap           = { version = "4.4.12", features = [ "derive" ] }
-embed          = { git = "https://github.com/RGBCube/embed-rs" }
-env_logger     = "0.10.1"
-log            = { version = "0.4.20", features = [ "serde" ] }
-maud           = { git = "https://github.com/lambda-fairy/maud", features = [ "axum" ] }
-mime_guess     = "2.0.4"
-minify-js      = "0.6.0"
-pulldown-cmark = "0.9.3"
-tokio          = { version = "1.35.1", features = [ "full" ] }
-tower          = "0.4.13"
-tower-http     = { version = "0.5.0", features = [ "trace" ] }
+anyhow             = "1.0.77"
+axum               = { version = "0.7.3", features = [ "macros" ] }
+axum-server        = { version = "0.6.0", features = [ "tls-rustls" ] }
+bytes              = "1.5.0"
+cargo_toml         = "0.17.2"
+chrono             = "0.4.31"
+clap               = { version = "4.4.12", features = [ "derive" ] }
+embed              = { git = "https://github.com/RGBCube/embed-rs" }
+env_logger         = "0.10.1"
+log                = { version = "0.4.20", features = [ "serde" ] }
+maud               = { git = "https://github.com/lambda-fairy/maud", features = [ "axum" ] }
+mime_guess         = "2.0.4"
+minify-js          = "0.6.0"
+pulldown-cmark     = "0.9.3"
+tokio              = { version = "1.35.1", features = [ "full" ] }
+tower              = "0.4.13"
+tower-http         = { version = "0.5.0", features = [ "trace" ] }
 
 [patch.crates-io]
 proc-macro2 = { git = "https://github.com/RGBCube/proc-macro2" }

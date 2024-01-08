@@ -1,8 +1,8 @@
 use std::array;
 
-use actix_web::{
-    dev::ServiceResponse,
-    middleware::ErrorHandlerResponse,
+use axum::{
+    http::StatusCode,
+    BoxError,
 };
 use maud::html;
 
@@ -11,12 +11,9 @@ use crate::{
     page::cube,
 };
 
-pub fn handler<B: 'static>(
-    response: ServiceResponse<B>,
-) -> actix_web::Result<ErrorHandlerResponse<B>> {
-    let (request, response) = response.into_parts();
-
-    let response = response.set_body(
+pub async fn handler(_: BoxError) -> (StatusCode, String) {
+    (
+        StatusCode::INTERNAL_SERVER_ERROR,
         cube::create(
             Some("Error"),
             asset::Css::Shared("cube-grid.css"),
@@ -32,11 +29,5 @@ pub fn handler<B: 'static>(
             }),
         )
         .into_string(),
-    );
-
-    Ok(ErrorHandlerResponse::Response(
-        ServiceResponse::new(request, response)
-            .map_into_boxed_body()
-            .map_into_right_body(),
-    ))
+    )
 }

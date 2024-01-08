@@ -1,11 +1,15 @@
-use axum::Router;
+use axum::{
+    // error_handling::HandleErrorLayer,
+    Router,
+};
+// use tower::ServiceBuilder;
 
-mod internal_server_error;
+// mod internal_server_error;
 mod not_found;
 
-pub fn handler<B: 'static>() -> ErrorHandlers<B> {
-    Router::new().fallback(not_found::handler).handler(
-        StatusCode::INTERNAL_SERVER_ERROR,
-        internal_server_error::handler,
-    )
+pub fn router() -> Router {
+    Router::new().fallback(not_found::handler)
+    // TODO
+    // .layer(ServiceBuilder::new().
+    // layer(HandleErrorLayer::new(internal_server_error::handler)))
 }

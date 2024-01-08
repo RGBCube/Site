@@ -10,7 +10,7 @@ use crate::{
     page::cube,
 };
 
-pub fn handler() -> Markup {
+pub async fn handler() -> Markup {
     cube::create(
         Some("404"),
         asset::Css::Shared("cube-grid.css"),
