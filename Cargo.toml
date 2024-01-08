@@ -5,7 +5,7 @@ authors     = [ "RGBCube" ]
 license     = "GPL"
 version     = "0.0.1"
 homepage    = "https://rgbcube.github.io"
-repositoty  = "https://github.com/RGBCube/rgbcube.github.io"
+repository  = "https://github.com/RGBCube/rgbcube.github.io"
 edition     = "2021"
 
 [dependencies]
@@ -31,6 +31,3 @@ tower-http         = { version = "0.5.0", features = [ "trace" ] }
 
 [patch.crates-io]
 proc-macro2 = { git = "https://github.com/RGBCube/proc-macro2" }
-
-[build]
-incremental = true
