@@ -170,8 +170,8 @@
 
           serviceConfig = let
             arguments = [
-              "--http-port" cfg.httpPort
-              "--https-port" cfg.httpsPort
+              "--http-port" (toString cfg.httpPort)
+              "--https-port" (toString cfg.httpsPort)
               "--log-level" cfg.logLevel
             ] ++ (optionals (cfg.certificate != null) [
               "--certificate" cfg.certificate
