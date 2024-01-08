@@ -16,3 +16,4 @@ I've created this blog using Rust, [Axum](https://lib.rs/crates/axum),
 The webserver itself is hosted on a small VPS running [NixOS](https://nixos.org/)
 and is proxied behing Cloudflare.
 
+[Here is the GitHub repository for said site](https://github.com/RGBCube/Site)
