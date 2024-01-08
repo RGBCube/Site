@@ -10,7 +10,6 @@ use axum::{
     http::{
         header::CONTENT_TYPE,
         Response,
-        StatusCode,
     },
     response::IntoResponse,
 };
@@ -18,6 +17,7 @@ use bytes::Bytes;
 
 use super::markdown::PAGES;
 use crate::{
+    errors::not_found,
     minify,
     page::{
         text,
@@ -88,6 +88,6 @@ pub async fn handler(Path(path): Path<String>) -> Response<Body> {
     } else if let Some((metadata, body)) = PAGES.get(&path) {
         text::create(Some(&metadata.title), Page::from_str(&path), body).into_response()
     } else {
-        StatusCode::NOT_FOUND.into_response()
+        not_found::handler().await.into_response()
     }
 }
