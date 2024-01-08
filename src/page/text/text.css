@@ -8,6 +8,8 @@ body {
 }
 
 .not-flex {
+  font-size: large;
+
   display: block;
   width: min(100vh, 80em);
 
@@ -15,7 +17,7 @@ body {
 }
 
 nav {
-  font-size: large;
+  font-size: larger;
 
   background-color: white;
   padding: .3em .6em;
