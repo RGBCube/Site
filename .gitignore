@@ -4,6 +4,7 @@
 !src/errors/
 !src/page/
 !src/page/cube/
+!src/page/fonts/
 !src/page/text/
 !src/routes/
 !src/routes/blog/
