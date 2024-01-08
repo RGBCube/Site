@@ -54,7 +54,7 @@ pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(
         log::info!("Adding page {path}");
         pages.insert(
             path.to_string().strip_suffix(".md").unwrap().to_string(),
-            (metadata, markdown::parse(&content)),
+            (metadata, markdown::parse(content)),
         );
     }
 
@@ -63,7 +63,7 @@ pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(
 
 pub async fn handler(Path(path): Path<String>) -> Markup {
     if let Some((metadata, body)) = PAGES.get(&path) {
-        text::create(Some(&metadata.title), Page::from_str(&path), &body)
+        text::create(Some(&metadata.title), Page::from_str(&path), body)
     } else {
         not_found::handler().await
     }
