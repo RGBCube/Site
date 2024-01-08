@@ -103,12 +103,39 @@
         services.site = {
           enable = mkEnableOption (mdDoc "site service");
 
-          port = mkOption {
+          certificate = mkOption {
+            type        = types.nullOr types.path;
+            default     = null;
+            example     = "/path/to/cert.pem";
+            description = mdDoc ''
+              The path to the SSL certificate the site will use.
+            '';
+          };
+
+          key = mkOption {
+            type        = types.nullOr types.path;
+            default     = null;
+            example     = "/path/to/key.pem";
+            description = mdDoc ''
+              The path to the SSL key the site will use.
+            '';
+          };
+
+          httpPort = mkOption {
             type        = types.port;
             default     = 8080;
             example     = 80;
             description = mdDoc ''
-              Specifies on which port the site service listens for connections.
+              Specifies on which port the site service listens for HTTP connections.
+            '';
+          };
+
+          httpsPort = mkOption {
+            type        = types.port;
+            default     = 8443;
+            example     = 80;
+            description = mdDoc ''
+              Specifies on which port the site service listens for HTTPS connections.
             '';
           };
 
@@ -138,11 +165,20 @@
           wantedBy    = [ "multi-user.target" ];
 
           serviceConfig = let
-            needsPrivilidges = cfg.port < 1024;
+            arguments = [
+              "--http-port" cfg.httpPort
+              "--https-port" cfg.httpsPort
+              "--log-level" cfg.logLevel
+            ] ++ (optionals (cfg.certificate != null) [
+              "--certificate" cfg.certificate
+            ]) ++ (optionals (cfg.key != null) [
+              "--key" cfg.key
+            ]);
+            needsPrivilidges = cfg.httpPort < 1024 || cfg.httpsPort < 1024;
             capabilities     = [ "" ] ++ optionals needsPrivilidges [ "CAP_NET_BIND_SERVICE" ];
             rootDirectory    = "/run/site";
           in {
-            ExecStart               = "${self.packages.${pkgs.system}.site}/bin/site --port ${cfg.port} --log-level ${cfg.logLevel}";
+            ExecStart               = "${self.packages.${pkgs.system}.site}/bin/site " + (concatStringsSep " " arguments);
             Restart                 = "always";
             DynamicUser             = true;
             RootDirectory           = rootDirectory;
