@@ -220,7 +220,7 @@
         };
 
         networking.firewall.allowedTCPPorts =
-          optionals cfg.openFirewall [ cfg.port ];
+          optionals cfg.openFirewall [ cfg.httpPort cfg.httpsPort ];
       };
     };
   });
