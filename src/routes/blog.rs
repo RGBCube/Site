@@ -72,7 +72,7 @@ pub async fn index_handler() -> Markup {
 
 pub async fn entry_handler(Path(entry): Path<String>) -> Markup {
     if let Some((metadata, body)) = ENTRIES.get(entry.as_str()) {
-        text::create(Some(&metadata.title), Page::Other, &body)
+        text::create(Some(&metadata.title), Page::Other, body)
     } else {
         not_found::handler().await
     }
