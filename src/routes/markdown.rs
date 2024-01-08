@@ -4,15 +4,7 @@ use std::{
     sync::LazyLock,
 };
 
-use axum::{
-    body::Body,
-    extract::Path,
-    http::Response,
-    response::{
-        Html,
-        IntoResponse,
-    },
-};
+use axum::extract::Path;
 use chrono::NaiveDate;
 use maud::Markup;
 use serde::Deserialize;
@@ -26,17 +18,14 @@ use crate::{
     },
 };
 
-#[derive(Deserialize)]
-struct Metadata {
-    title: String,
-    // TODO: Use these for blog articles.
-    #[allow(dead_code)]
-    date: Option<NaiveDate>,
-    #[allow(dead_code)]
-    tags: Option<Vec<String>>,
+#[derive(Deserialize, Debug)]
+pub struct Metadata {
+    pub title: String,
+    pub date: Option<NaiveDate>,
+    pub tags: Option<Vec<String>>,
 }
 
-static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(|| {
+pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(|| {
     let routes_path = path::Path::new(file!())
         .parent()
         .unwrap()
@@ -72,11 +61,10 @@ static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(|| {
     pages
 });
 
-pub async fn handler(Path(path): Path<String>) -> Response<Body> {
+pub async fn handler(Path(path): Path<String>) -> Markup {
     if let Some((metadata, body)) = PAGES.get(&path) {
-        Html(text::create(Some(&metadata.title), Page::from_str(&path), &body).into_string())
-            .into_response()
+        text::create(Some(&metadata.title), Page::from_str(&path), &body)
     } else {
-        not_found::handler().await.into_response()
+        not_found::handler().await
     }
 }
