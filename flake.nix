@@ -47,15 +47,19 @@
     crane = inputs.crane.lib.${system}.overrideToolchain toolchain;
 
     cssFilter   = path: type: builtins.match ".*css$" path != null;
+    gifFilter   = path: type: builtins.match ".*gif$" path != null;
     jsFilter    = path: type: builtins.match ".*js$" path != null;
-    assetFilter = path: type: type == "directory" && builtins.match "^assets.*" path != null;
+    mdFilter    = path: type: builtins.match ".*md$" path != null;
+    woff2Filter = path: type: builtins.match ".*woff2$" path != null;
 
-    src = lib.cleanSourceWith {
-      src    = crane.path ./.;
-      filter = path: type: (crane.filterCargoSources path type)
+     src = lib.cleanSourceWith {
+       src    = crane.path ./.;
+       filter = path: type: (crane.filterCargoSources path type)
         || (cssFilter   path type)
+        || (gifFilter   path type)
         || (jsFilter    path type)
-        || (assetFilter path type);
+        || (mdFilter    path type)
+        || (woff2Filter path type);
     };
 
     srcArgs = {
