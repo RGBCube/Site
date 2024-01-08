@@ -4,8 +4,8 @@ description = "The official website and link portal of RGBCube and his work."
 authors     = [ "RGBCube" ]
 license     = "GPL"
 version     = "0.0.1"
-homepage    = "https://rgbcube.github.io"
-repository  = "https://github.com/RGBCube/rgbcube.github.io"
+homepage    = "https://rgbcu.be"
+repository  = "https://github.com/RGBCube/Site"
 edition     = "2021"
 
 [dependencies]
