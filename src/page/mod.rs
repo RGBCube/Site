@@ -41,6 +41,16 @@ impl Page {
             Self::Other => "other",
         }
     }
+
+    pub fn from_str(s: &str) -> Self {
+        match s {
+            "home" => Self::Home,
+            "about" => Self::About,
+            "blog" => Self::Blog,
+            "contact" => Self::Contact,
+            _ => Self::Other,
+        }
+    }
 }
 /// Creates a page with the given head and body.
 ///

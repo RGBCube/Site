@@ -3,13 +3,13 @@ use axum::{
     Router,
 };
 
-mod about;
 mod assets;
 mod index;
+mod mdpage;
 
 pub fn router() -> Router {
     Router::new()
         .route("/", get(index::handler))
-        .route("/about", get(about::handler))
+        .route("/:page", get(mdpage::handler))
         .route("/assets/*path", get(assets::handler))
 }

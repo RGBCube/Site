@@ -13,7 +13,7 @@ use crate::page::{
 };
 
 /// Creates a simple text page.
-pub fn create(title: Option<&str>, page: Page, body: Markup) -> Markup {
+pub fn create(title: Option<&str>, page: Page, body: &Markup) -> Markup {
     crate::page::create(
         title,
         html! {
