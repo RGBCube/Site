@@ -1,6 +1,5 @@
 use std::{
     collections::HashMap,
-    path,
     sync::LazyLock,
 };
 
@@ -26,18 +25,8 @@ pub struct Metadata {
 }
 
 pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(|| {
-    let routes_path = dbg!(path::Path::new(proc_file::file!())
-        .parent()
-        .unwrap()
-        .canonicalize()
-        .unwrap());
-
     HashMap::from_iter(embed::dir!(".").flatten().iter().filter_map(|file| {
-        let path = dbg!(path::Path::new(file.path().as_ref()))
-            .strip_prefix(&routes_path)
-            .unwrap()
-            .to_str()
-            .unwrap();
+        let path = file.path().as_ref().split_once("routes/").unwrap().1;
 
         if !path.ends_with(".md") {
             return None;
@@ -52,7 +41,7 @@ pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(
         log::info!("Adding page {path}");
 
         Some((
-            path.to_string().strip_suffix(".md").unwrap().to_string(),
+            path.strip_suffix(".md").unwrap().to_string(),
             (metadata, markdown::parse(content)),
         ))
     }))

@@ -74,7 +74,7 @@ async fn redirect_http(args: Cli) {
             match make_https(host, uri) {
                 Ok(uri) => Ok(Redirect::permanent(&uri.to_string())),
                 Err(error) => {
-                    log::warn!("Failed to convert URI to HTTPS: {}", error);
+                    log::warn!("Failed to convert URI to HTTPS: {error}");
                     Err(StatusCode::BAD_REQUEST)
                 },
             }

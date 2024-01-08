@@ -24,7 +24,6 @@ log            = { version = "0.4.20", features = [ "serde" ] }
 maud           = { git = "https://github.com/lambda-fairy/maud", features = [ "axum" ] }
 mime_guess     = "2.0.4"
 minify-js      = "0.6.0"
-proc-file      = { git = "https://github.com/RGBCube/proc-file" }
 pulldown-cmark = "0.9.3"
 serde          = { version = "1.0.195", features = [ "derive" ] }
 serde_yaml     = "0.9.30"
