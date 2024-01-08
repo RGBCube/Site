@@ -8,8 +8,24 @@
 @font-face {
   font-display: block;
   font-family: "BaiJam";
+  font-style: italic;
+  font-weight: normal;
+  src: url("/assets/BaiJamjureeMediumItalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "BaiJam";
   font-weight: bold;
   src: url("/assets/BaiJamjureeBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "BaiJam";
+  font-style: italic;
+  font-weight: bold;
+  src: url("/assets/BaiJamjureeBoldItalic.woff2") format("woff2");
 }
 
 html {
