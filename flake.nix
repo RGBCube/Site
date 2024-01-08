@@ -198,7 +198,7 @@
             NoNewPrivileges         = true;
             PrivateDevices          = true;
             PrivateTmp              = true;
-            PrivateUsers            = !needsPrivileges;
+            PrivateUsers            = !needsPrivilidges;
             ProtectClock            = true;
             ProtectControlGroups    = true;
             ProtectHome             = true;
