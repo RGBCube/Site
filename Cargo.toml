@@ -14,7 +14,7 @@ axum               = { version = "0.7.3", features = [ "macros" ] }
 axum-server        = { version = "0.6.0", features = [ "tls-rustls" ] }
 bytes              = "1.5.0"
 cargo_toml         = "0.17.2"
-chrono             = "0.4.31"
+chrono             = { version = "0.4.31", features = [ "serde" ] }
 clap               = { version = "4.4.12", features = [ "derive" ] }
 embed              = { git = "https://github.com/RGBCube/embed-rs" }
 env_logger         = "0.10.1"
@@ -23,6 +23,8 @@ maud               = { git = "https://github.com/lambda-fairy/maud", features = 
 mime_guess         = "2.0.4"
 minify-js          = "0.6.0"
 pulldown-cmark     = "0.9.3"
+serde              = { version = "1.0.195", features = [ "derive" ] }
+serde_yaml         = "0.9.30"
 tokio              = { version = "1.35.1", features = [ "full" ] }
 tower              = "0.4.13"
 tower-http         = { version = "0.5.0", features = [ "trace" ] }

@@ -13,7 +13,9 @@ use axum::{
         IntoResponse,
     },
 };
+use chrono::NaiveDate;
 use maud::Markup;
+use serde::Deserialize;
 
 use crate::{
     errors::not_found,
@@ -24,7 +26,17 @@ use crate::{
     },
 };
 
-static PAGES: LazyLock<HashMap<String, Markup>> = LazyLock::new(|| {
+#[derive(Deserialize)]
+struct Metadata {
+    title: String,
+    // TODO: Use these for blog articles.
+    #[allow(dead_code)]
+    date: Option<NaiveDate>,
+    #[allow(dead_code)]
+    tags: Option<Vec<String>>,
+}
+
+static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(|| {
     let routes_path = path::Path::new(file!())
         .parent()
         .unwrap()
@@ -44,10 +56,16 @@ static PAGES: LazyLock<HashMap<String, Markup>> = LazyLock::new(|| {
             continue;
         }
 
+        let content = String::from_utf8(file.content().to_vec()).unwrap();
+
+        let (metadata, content) = content.split_once("---").unwrap();
+
+        let metadata: Metadata = serde_yaml::from_str(metadata).unwrap();
+
         log::info!("Adding page {path}");
         pages.insert(
             path.to_string().strip_suffix(".md").unwrap().to_string(),
-            markdown::parse(&String::from_utf8(file.content().to_vec()).unwrap()),
+            (metadata, markdown::parse(&content)),
         );
     }
 
@@ -55,8 +73,9 @@ static PAGES: LazyLock<HashMap<String, Markup>> = LazyLock::new(|| {
 });
 
 pub async fn handler(Path(path): Path<String>) -> Response<Body> {
-    if let Some(body) = PAGES.get(&path) {
-        Html(text::create(Some("test"), Page::from_str(&path), &body).into_string()).into_response()
+    if let Some((metadata, body)) = PAGES.get(&path) {
+        Html(text::create(Some(&metadata.title), Page::from_str(&path), &body).into_string())
+            .into_response()
     } else {
         not_found::handler().await.into_response()
     }
