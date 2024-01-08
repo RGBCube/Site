@@ -5,11 +5,11 @@ use axum::{
 
 mod assets;
 mod index;
-mod mdpage;
+mod markdown;
 
 pub fn router() -> Router {
     Router::new()
         .route("/", get(index::handler))
-        .route("/:page", get(mdpage::handler))
+        .route("/*page", get(markdown::handler))
         .route("/assets/*path", get(assets::handler))
 }
