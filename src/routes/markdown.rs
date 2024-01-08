@@ -3,19 +3,11 @@ use std::{
     sync::LazyLock,
 };
 
-use axum::extract::Path;
 use chrono::NaiveDate;
 use maud::Markup;
 use serde::Deserialize;
 
-use crate::{
-    errors::not_found,
-    markdown,
-    page::{
-        text,
-        Page,
-    },
-};
+use crate::markdown;
 
 #[derive(Deserialize, Debug)]
 pub struct Metadata {
@@ -46,11 +38,3 @@ pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(
         ))
     }))
 });
-
-pub async fn handler(Path(path): Path<String>) -> Markup {
-    if let Some((metadata, body)) = PAGES.get(&path) {
-        text::create(Some(&metadata.title), Page::from_str(&path), body)
-    } else {
-        not_found::handler().await
-    }
-}

@@ -13,6 +13,5 @@ pub fn router() -> Router {
         .route("/", get(index::handler))
         .route("/blog", get(blog::index_handler))
         .route("/blog/:entry", get(blog::entry_handler))
-        .route("/*page", get(markdown::handler))
-        .route("/assets/*path", get(assets::handler))
+        .route("/*path", get(assets::handler))
 }
