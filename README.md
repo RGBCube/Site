@@ -18,15 +18,33 @@ Enables the site service.
 
 Default: false.
 
-### `services.site.port`
+### `services.site.certificate`
 
-Specifies on which port the site service listens for connections.
+The path to the SSL certificate the site will use.
+
+Default: null.
+
+### `services.site.key`
+
+The path to the SSL key the site will use.
+
+Default: null.
+
+### `services.site.httpPort`
+
+Specifies on which port the site service listens for HTTP connections.
 
 Default: 8080.
 
+### `services.site.httpsPort`
+
+Specifies on which port the site service listens for HTTPS connections.
+
+Default: 8443.
+
 ### `services.site.logLevel`
 
-The log level to log stuff with.
+Specifies the log level that the site service will log stuff with.
 
 Default: info.
 
