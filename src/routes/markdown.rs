@@ -32,9 +32,7 @@ pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(
         .canonicalize()
         .unwrap();
 
-    let mut pages = HashMap::new();
-
-    for file in embed::dir!(".").flatten() {
+    HashMap::from_iter(embed::dir!(".").flatten().iter().filter_map(|file| {
         let path = path::Path::new(file.path().as_ref())
             .strip_prefix(&routes_path)
             .unwrap()
@@ -42,7 +40,7 @@ pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(
             .unwrap();
 
         if !path.ends_with(".md") {
-            continue;
+            return None;
         }
 
         let content = String::from_utf8(file.content().to_vec()).unwrap();
@@ -52,13 +50,12 @@ pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(
         let metadata: Metadata = serde_yaml::from_str(metadata).unwrap();
 
         log::info!("Adding page {path}");
-        pages.insert(
+
+        Some((
             path.to_string().strip_suffix(".md").unwrap().to_string(),
             (metadata, markdown::parse(content)),
-        );
-    }
-
-    pages
+        ))
+    }))
 });
 
 pub async fn handler(Path(path): Path<String>) -> Markup {

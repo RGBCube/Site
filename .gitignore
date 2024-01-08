@@ -6,6 +6,7 @@
 !src/page/cube/
 !src/page/text/
 !src/routes/
+!src/routes/blog/
 !src/routes/index/
 
 !.gitignore

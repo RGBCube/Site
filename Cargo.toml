@@ -18,6 +18,8 @@ chrono             = { version = "0.4.31", features = [ "serde" ] }
 clap               = { version = "4.4.12", features = [ "derive" ] }
 embed              = { git = "https://github.com/RGBCube/embed-rs" }
 env_logger         = "0.10.1"
+indexmap           = "2.1.0"
+itertools          = "0.12.0"
 log                = { version = "0.4.20", features = [ "serde" ] }
 maud               = { git = "https://github.com/lambda-fairy/maud", features = [ "axum" ] }
 mime_guess         = "2.0.4"

@@ -1,10 +1,17 @@
+use std::sync::LazyLock;
+
 use axum::extract::Path;
+use indexmap::IndexMap;
+use itertools::Itertools;
 use maud::{
     html,
     Markup,
 };
 
-use super::markdown::PAGES;
+use super::markdown::{
+    Metadata,
+    PAGES,
+};
 use crate::{
     errors::not_found,
     page::{
@@ -13,24 +20,49 @@ use crate::{
     },
 };
 
+static ENTRIES: LazyLock<IndexMap<&'static str, (&'static Metadata, Markup)>> =
+    LazyLock::new(|| {
+        IndexMap::from_iter(
+            PAGES
+                .iter()
+                .sorted_by_key(|(_, value)| value.0.date)
+                .rev()
+                .filter_map(|(path, (metadata, body))| {
+                    if let Some(name) = path.strip_prefix("blog/") {
+                        let body = html! {
+                            (body)
+
+                            @if let Some(tags) = &metadata.tags {
+                                p {
+                                    "Tags: "
+                                    (tags.join(", "))
+                                }
+                            }
+                        };
+
+                        Some((name, (metadata, body)))
+                    } else {
+                        None
+                    }
+                }),
+        )
+    });
+
 pub async fn index_handler() -> Markup {
     text::create(
-        Some("blog"),
+        Some("Blog"),
         Page::Blog,
         &html! {
             h1 { "Blog Articles" }
             p { "RSS feed coming soon, probably :)" }
 
             ul {
-                @let pages = &*PAGES;
-                @for (path, (metadata, ..)) in pages.iter() {
-                    @if path.starts_with("blog") {
-                        li {
-                            (metadata.date.unwrap().format("%d/%m/%Y"))
-                            " - "
-                            a href=(format!("/{path}")) {
-                                (metadata.title)
-                            }
+                @for (path, (metadata, ..)) in ENTRIES.iter() {
+                    li {
+                        (metadata.date.unwrap().format("%d/%m/%Y"))
+                        " - "
+                        a href=(format!("/blog/{path}")) {
+                            (metadata.title)
                         }
                     }
                 }
@@ -39,22 +71,9 @@ pub async fn index_handler() -> Markup {
     )
 }
 
-pub async fn entry_handler(Path(path): Path<String>) -> Markup {
-    if let Some((metadata, body)) = PAGES.get(&path) {
-        text::create(
-            Some(&metadata.title),
-            Page::Other,
-            &html! {
-                (body)
-
-                @if let Some(tags) = &metadata.tags {
-                    p {
-                        "Tags: "
-                        (tags.join(", "))
-                    }
-                }
-            },
-        )
+pub async fn entry_handler(Path(entry): Path<String>) -> Markup {
+    if let Some((metadata, body)) = ENTRIES.get(entry.as_str()) {
+        text::create(Some(&metadata.title), Page::Other, &body)
     } else {
         not_found::handler().await
     }
