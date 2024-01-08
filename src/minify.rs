@@ -1,12 +1,4 @@
-use std::{
-    env::temp_dir,
-    fs::File,
-    hash::{
-        BuildHasher,
-        RandomState,
-    },
-    io::Write,
-};
+use std::str::from_utf8;
 
 use minify_js::{
     Session,
@@ -30,8 +22,8 @@ pub fn insert_min(path: &str) -> String {
 
 pub fn generic(path: &str, content: &[u8]) -> Vec<u8> {
     match extension_of(path) {
-        Some("js") => js(&String::from_utf8(content.to_vec()).unwrap()).into_bytes(),
-        Some("css") => css(&String::from_utf8(content.to_vec()).unwrap()).into_bytes(),
+        Some("js") => js(from_utf8(content).unwrap()).into_bytes(),
+        Some("css") => css(from_utf8(content).unwrap()).into_bytes(),
         _ => content.to_vec(),
     }
 }
@@ -47,24 +39,7 @@ pub fn js(content: &str) -> String {
     )
     .unwrap();
 
-    String::from_utf8(output)
-        .map_err(|error| {
-            let hash = RandomState::new()
-                .hash_one(error.clone().into_bytes())
-                .to_string();
-
-            let path = temp_dir().join(hash);
-
-            let mut file = File::create(&path).unwrap();
-            file.write_all(&error.into_bytes()).unwrap();
-
-            format!(
-                "Failed to create a String from minified JavaScript code. The minified code has \
-                 been written to {}",
-                path.display()
-            )
-        })
-        .unwrap()
+    String::from_utf8(output).unwrap()
 }
 
 pub fn css(content: &str) -> String {
