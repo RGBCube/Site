@@ -27,10 +27,12 @@ pub fn create(title: Option<&str>, page: Page, body: &Markup) -> Markup {
         html! {
             .not-flex {
                 nav {
-                    a.home href="/" { "HOME" }
-                    a.about href="/about" { "ABOUT" }
-                    a.blog href="/blog" { "BLOG" }
-                    a.contact href="/contact" { "CONTACT" }
+                    .content {
+                        a.home href="/" { "HOME" }
+                        a.about href="/about" { "ABOUT" }
+                        a.blog href="/blog" { "BLOG" }
+                        a.contact href="/contact" { "CONTACT" }
+                    }
                 }
 
                 (body)
