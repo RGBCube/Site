@@ -25,7 +25,7 @@ pub fn create(title: Option<&str>, page: Page, body: &Markup) -> Markup {
             ", page = page.as_str()).into()))
         },
         html! {
-            .not-flex {
+            .centered {
                 nav {
                     .content {
                         a.home href="/" { "HOME" }

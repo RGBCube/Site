@@ -7,7 +7,7 @@ body {
   justify-content: center;
 }
 
-.not-flex {
+.centered {
   font-size: large;
   overflow-x: hidden;
 
