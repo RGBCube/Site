@@ -26,7 +26,7 @@ pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(
 
         let content = String::from_utf8(file.content().to_vec()).unwrap();
 
-        let mut parts = content.splitn(2, "---").skip(1);
+        let mut parts = content.splitn(3, "---").skip(1);
 
         let metadata: Metadata = serde_yaml::from_str(parts.next().unwrap()).unwrap();
 
