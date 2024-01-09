@@ -28,7 +28,7 @@ nav {
   overflow-x: auto;
 
   background-color: white;
-  padding: .3em .6em;
+  padding: 0.3em 0.6em;
 
   /* Rotated 180deg so it's top instead of bottom. */
   border-top-left-radius: 1em;
@@ -38,7 +38,7 @@ nav {
 nav a {
   color: black;
   font-weight: bold;
-  margin-right: .6em;
+  margin-right: 0.6em;
 }
 
 a {
@@ -50,7 +50,7 @@ a:hover {
 }
 
 footer {
-  border-top: .15em solid white;
+  border-top: 0.15em solid white;
 
   display: flex;
   justify-content: center;
@@ -58,5 +58,5 @@ footer {
   font-size: small;
 
   margin-bottom: 1em;
-  padding-top: .5em;
+  padding-top: 0.5em;
 }

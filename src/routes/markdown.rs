@@ -26,15 +26,15 @@ pub static PAGES: LazyLock<HashMap<String, (Metadata, Markup)>> = LazyLock::new(
 
         let content = String::from_utf8(file.content().to_vec()).unwrap();
 
-        let (metadata, content) = content.split_once("---").unwrap();
+        let mut parts = content.splitn(2, "---").skip(1);
 
-        let metadata: Metadata = serde_yaml::from_str(metadata).unwrap();
+        let metadata: Metadata = serde_yaml::from_str(parts.next().unwrap()).unwrap();
 
         log::info!("Adding page {path}");
 
         Some((
             path.strip_suffix(".md").unwrap().to_string(),
-            (metadata, markdown::parse(content)),
+            (metadata, markdown::parse(parts.next().unwrap())),
         ))
     }))
 });
