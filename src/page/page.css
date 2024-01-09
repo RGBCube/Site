@@ -1,13 +1,13 @@
 @font-face {
   font-display: block;
-  font-family: "BaiJam";
+  font-family: "Bai Jamjuree";
   font-weight: normal;
   src: url("/assets/BaiJamjureeMedium.woff2") format("woff2");
 }
 
 @font-face {
   font-display: block;
-  font-family: "BaiJam";
+  font-family: "Bai Jamjuree";
   font-style: italic;
   font-weight: normal;
   src: url("/assets/BaiJamjureeMediumItalic.woff2") format("woff2");
@@ -15,23 +15,58 @@
 
 @font-face {
   font-display: block;
-  font-family: "BaiJam";
+  font-family: "Bai Jamjuree";
   font-weight: bold;
   src: url("/assets/BaiJamjureeBold.woff2") format("woff2");
 }
 
 @font-face {
   font-display: block;
-  font-family: "BaiJam";
+  font-family: "Bai Jamjuree";
   font-style: italic;
   font-weight: bold;
   src: url("/assets/BaiJamjureeBoldItalic.woff2") format("woff2");
 }
 
+@font-face {
+  font-display: block;
+  font-family: "IBM Plex Mono";
+  font-weight: normal;
+  src: url("/assets/IBMPlexMonoMedium.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "IBM Plex Mono";
+  font-style: italic;
+  font-weight: normal;
+  src: url("/assets/IBMPlexMonoMediumItalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "IBM Plex Mono";
+  font-weight: bold;
+  src: url("/assets/IBMPlexMonoBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "IBM Plex Mono";
+  font-style: italic;
+  font-weight: bold;
+  src: url("/assets/IBMPlexMonoBoldItalic.woff2") format("woff2");
+}
+
 html {
   background-color: black;
   color: white;
-  font-family: "BaiJam";
+  font-family: "Bai Jamjuree";
+}
+
+code,
+pre {
+  font-family: "IBM Plex Mono";
 }
 
 body,
