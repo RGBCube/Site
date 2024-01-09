@@ -12,9 +12,7 @@ body {
   overflow-wrap: break-word;
 
   display: initial;
-  width: min(100vw - 1em, 50em);
-
-  margin: 0 1em;
+  width: min(100vw - 2em, 50em);
 }
 
 .content,
@@ -32,6 +30,7 @@ nav {
   background-color: white;
   padding: .3em .6em;
 
+  /* Rotated 180deg so it's top instead of bottom. */
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
 }
@@ -52,9 +51,12 @@ a:hover {
 
 footer {
   border-top: .15em solid white;
+
   display: flex;
-  font-size: small;
   justify-content: center;
-  margin-bottom: 3em;
+
+  font-size: small;
+
+  margin-bottom: 1em;
   padding-top: .5em;
 }
