@@ -92,7 +92,7 @@ let friction = 3;
 let sensitivity = 0.01;
 let velocity = Vec3.zero();
 
-const orientation = {
+const orient = {
   __cube: document.querySelector(".cube"),
   __value: new Quat(0, 0, 0, 1),
 
@@ -164,7 +164,7 @@ const orientation = {
 
     const rotation = Quat.fromAxis(axis);
 
-    orientation.set(Quat.mul(rotation, orientation.get()));
+    orient.set(Quat.mul(rotation, orient.get()));
   };
 
   document.addEventListener("mousemove", handleMove);
@@ -218,7 +218,7 @@ const orientation = {
 
       const rotation = Quat.fromAxis(axis);
 
-      orientation.set(Quat.mul(rotation, orientation.get()));
+      orient.set(Quat.mul(rotation, orient.get()));
     }
 
     requestAnimationFrame(updateFrame);
