@@ -1,6 +1,11 @@
 use std::sync::LazyLock;
 
-use axum::extract::Path;
+use axum::{
+    body::Body,
+    extract::Path,
+    http::Response,
+    response::IntoResponse,
+};
 use indexmap::IndexMap;
 use itertools::Itertools;
 use maud::{
@@ -70,10 +75,10 @@ pub async fn index_handler() -> Markup {
     )
 }
 
-pub async fn entry_handler(Path(entry): Path<String>) -> Markup {
+pub async fn entry_handler(Path(entry): Path<String>) -> Response<Body> {
     if let Some((metadata, body)) = ENTRIES.get(entry.as_str()) {
-        text::create(Some(&metadata.title), Page::Other, body)
+        text::create(Some(&metadata.title), Page::Other, body).into_response()
     } else {
-        not_found::handler().await
+        not_found::handler().await.into_response()
     }
 }
