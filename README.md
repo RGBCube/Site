@@ -56,8 +56,13 @@ Default: false.
 
 ## License
 
+All the markdown files under the `src/` directory are licensed
+under [CC BY-NC-ND 4.0](https://creativecommons.org/licenses/by-nc-nd/4.0/).
+
+The other code is licensed under the GPU GPL V3 (`LICENSE_GPL.md`):
+
 ```
-Copyright (C) 2023-preset  RGBCube
+Copyright (C) 2023-present  RGBCube
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
