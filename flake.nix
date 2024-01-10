@@ -109,39 +109,12 @@
         services.site = {
           enable = mkEnableOption (mdDoc "site service");
 
-          certificate = mkOption {
-            type        = types.nullOr types.path;
-            default     = null;
-            example     = "/path/to/cert.pem";
-            description = mdDoc ''
-              The path to the SSL certificate the site will use.
-            '';
-          };
-
-          key = mkOption {
-            type        = types.nullOr types.path;
-            default     = null;
-            example     = "/path/to/key.pem";
-            description = mdDoc ''
-              The path to the SSL key the site will use.
-            '';
-          };
-
-          httpPort = mkOption {
+          port = mkOption {
             type        = types.port;
             default     = 8080;
             example     = 80;
             description = mdDoc ''
-              Specifies on which port the site service listens for HTTP connections.
-            '';
-          };
-
-          httpsPort = mkOption {
-            type        = types.port;
-            default     = 8443;
-            example     = 80;
-            description = mdDoc ''
-              Specifies on which port the site service listens for HTTPS connections.
+              Specifies on which port the site service listens for connections.
             '';
           };
 
@@ -171,20 +144,11 @@
           wantedBy    = [ "multi-user.target" ];
 
           serviceConfig = let
-            arguments = [
-              "--http-port" (toString cfg.httpPort)
-              "--https-port" (toString cfg.httpsPort)
-              "--log-level" cfg.logLevel
-            ] ++ (optionals (cfg.certificate != null) [
-              "--certificate" cfg.certificate
-            ]) ++ (optionals (cfg.key != null) [
-              "--key" cfg.key
-            ]);
-            needsPrivilidges = cfg.httpPort < 1024 || cfg.httpsPort < 1024;
+            needsPrivilidges = cfg.port < 1024;
             capabilities     = [ "" ] ++ optionals needsPrivilidges [ "CAP_NET_BIND_SERVICE" ];
             rootDirectory    = "/run/site";
           in {
-            ExecStart               = "${self.packages.${pkgs.system}.site}/bin/site " + (concatStringsSep " " arguments);
+            ExecStart               = "${self.packages.${pkgs.system}.site}/bin/site --port ${cfg.port} --log-level ${cfg.logLevel}";
             Restart                 = "always";
             DynamicUser             = true;
             RootDirectory           = rootDirectory;
@@ -222,7 +186,7 @@
         };
 
         networking.firewall.allowedTCPPorts =
-          optionals cfg.openFirewall [ cfg.httpPort cfg.httpsPort ];
+          optionals cfg.openFirewall [ cfg.port ];
       };
     };
   });
