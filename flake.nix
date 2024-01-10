@@ -153,7 +153,7 @@
             enableACME = true;
             forceSSL   = true;
 
-            locations."/".proxyPass = "http://localhost:${cfg.port}";
+            locations."/".proxyPass = "http://localhost:${toString cfg.port}";
           };
 
           virtualHosts."www.${urlStripped}" = {
@@ -170,7 +170,7 @@
             useACMEHost = urlStripped;
 
             locations."/".extraCofig = ''
-              proxy_pass http://localhost:${cfg.port}/404;
+              proxy_pass http://localhost:${toString cfg.port}/404;
             '';
           };
         };
