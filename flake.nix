@@ -169,7 +169,7 @@
             forceSSL    = true;
             useACMEHost = urlStripped;
 
-            locations."/".extraCofig = ''
+            locations."/".extraConfig = ''
               proxy_pass http://localhost:${toString cfg.port}/404;
             '';
           };
