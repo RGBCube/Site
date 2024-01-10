@@ -8,7 +8,10 @@ use maud::html;
 
 use crate::{
     asset,
-    page::cube,
+    page::{
+        cube,
+        MANIFEST,
+    },
 };
 
 pub async fn handler() -> impl IntoResponse {
@@ -20,7 +23,7 @@ pub async fn handler() -> impl IntoResponse {
             array::from_fn(|_| {
                 html! {
                    .frame {
-                        a href="/" { "404" }
+                        a href=(MANIFEST.package.as_ref().unwrap().homepage().unwrap()) { "404" }
                     }
                    .square .black {}
                    .square .magenta {}
