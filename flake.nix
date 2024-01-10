@@ -127,6 +127,15 @@
             '';
           };
 
+          url = mkOption {
+            type        = types.str;
+            example     = "rgbcu.be";
+            description = mdDoc ''
+              The url the site is running at.
+              Should not have a protocol speficier or trailing slashes.
+            '';
+          };
+
           configureNginx = mkOption {
             type        = types.bool;
             default     = false;
@@ -138,10 +147,7 @@
       };
 
       config = mkIf cfg.enable {
-        services.nginx = let
-          cargoToml = builtins.fromTOML (builtins.readFile ./Cargo.toml);
-          urlStripped = removeSuffix "/" (removePrefix "https://" cargoToml.package.homepage);
-        in mkIf cfg.configureNginx {
+        services.nginx = mkIf cfg.configureNginx {
           enable = true;
 
           recommendedGzipSettings  = mkDefault true;
@@ -149,25 +155,25 @@
           recommendedProxySettings = mkDefault true;
           recommendedTlsSettings   = mkDefault true;
 
-          virtualHosts.${urlStripped} = {
+          virtualHosts.${cfg.url} = {
             enableACME = true;
             forceSSL   = true;
 
             locations."/".proxyPass = "http://localhost:${toString cfg.port}";
           };
 
-          virtualHosts."www.${urlStripped}" = {
+          virtualHosts."www.${cfg.url}" = {
             forceSSL   = true;
             enableACME = true;
 
             locations."/".extraConfig = ''
-              return 301 https://${urlStripped}$request_uri;
+              return 301 https://${cfg.url}$request_uri;
             '';
           };
 
           virtualHosts._ = {
             forceSSL    = true;
-            useACMEHost = urlStripped;
+            useACMEHost = cfg.url;
 
             locations."/".extraConfig = ''
               proxy_pass http://localhost:${toString cfg.port}/404;

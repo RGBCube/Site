@@ -30,6 +30,13 @@ Specifies the log level that the site service will log stuff with.
 
 Default: info.
 
+### `services.site.url`
+
+The url the site is running at.
+Should not have a protocol speficier or trailing slashes.
+
+Required.
+
 ### `services.site.configureNginx`
 
 Whether to configure Nginx and set the reverse proxy settings.
