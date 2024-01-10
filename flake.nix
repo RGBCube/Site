@@ -185,7 +185,7 @@
             capabilities     = [ "" ] ++ optionals needsPrivilidges [ "CAP_NET_BIND_SERVICE" ];
             rootDirectory    = "/run/site";
           in {
-            ExecStart               = "${self.packages.${pkgs.system}.site}/bin/site --port ${cfg.port} --log-level ${cfg.logLevel}";
+            ExecStart               = "${self.packages.${pkgs.system}.site}/bin/site --port ${toString cfg.port} --log-level ${cfg.logLevel}";
             Restart                 = "always";
             DynamicUser             = true;
             RootDirectory           = rootDirectory;
