@@ -111,7 +111,7 @@
 
           port = mkOption {
             type        = types.port;
-            default     = 8080;
+            default     = 4777;
             example     = 80;
             description = mdDoc ''
               Specifies on which port the site service listens for connections.
@@ -126,10 +126,32 @@
               Specifies the log level that the site service will log stuff with.
             '';
           };
+
+          configureNginx = mkOption {
+            type        = types.bool;
+            default     = false;
+            description = mdDoc ''
+              Whether to configure Nginx and set the reverse proxy settings.
+            '';
+          };
         };
       };
 
       config = mkIf cfg.enable {
+        services.nginx = let
+          cargoToml = builtins.fromTOML (builtins.readFile ./Cargo.toml);
+          urlStripped = removeSuffix "/" (removePrefix "https://" cargoToml.package.homepage);
+        in mkIf cfg.configureNginx {
+          enable = true;
+
+          recommendedGzipSettings  = mkDefault true;
+          recommendedOptimisation  = mkDefault true;
+          recommendedProxySettings = mkDefault true;
+          recommendedTlsSettings   = mkDefault true;
+
+          virtualHosts.${urlStripped}.proxyPass = "http://127.0.0.1:${cfg.port}";
+        };
+
         systemd.services.site = {
           description = "RGBCube's Homepage";
           requires    = [ "network.target" ];

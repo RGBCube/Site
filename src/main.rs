@@ -18,7 +18,7 @@ use tower_http::trace::TraceLayer;
 #[command(author, version, about)]
 struct Cli {
     /// The port to listen for connections on
-    #[arg(long, default_value = "8080")]
+    #[arg(long, default_value = "4777")]
     port: u16,
     /// The log level to log stuff with
     #[arg(long, default_value = "info")]

@@ -22,13 +22,19 @@ Default: false.
 
 Specifies on which port the site service listens for connections.
 
-Default: 8080.
+Default: 4777.
 
 ### `services.site.logLevel`
 
 Specifies the log level that the site service will log stuff with.
 
 Default: info.
+
+### `services.site.configureNginx`
+
+Whether to configure Nginx and set the reverse proxy settings.
+
+Default: false.
 
 ## License
 
