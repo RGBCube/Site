@@ -172,6 +172,10 @@
             locations."/".extraConfig = ''
               proxy_pass http://localhost:${toString cfg.port}/404;
             '';
+
+            locations."/assets".extraConfig = ''
+              proxy_pass http://localhost:${toString cfg.port}/assets;
+            '';
           };
         };
 
