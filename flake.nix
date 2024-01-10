@@ -126,14 +126,6 @@
               Specifies the log level that the site service will log stuff with.
             '';
           };
-
-          openFirewall = mkOption {
-            type        = types.bool;
-            default     = false;
-            description = mdDoc ''
-              Whether to open the firewall port for the tcp listener.
-            '';
-          };
         };
       };
 
@@ -184,9 +176,6 @@
             SystemCallFilter        = [ "@system-service" "~@resources" "~@privileged" ];
           };
         };
-
-        networking.firewall.allowedTCPPorts =
-          optionals cfg.openFirewall [ cfg.port ];
       };
     };
   });

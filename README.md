@@ -30,12 +30,6 @@ Specifies the log level that the site service will log stuff with.
 
 Default: info.
 
-### `services.site.openFirewall`
-
-Whether to open the firewall port for the tcp listener.
-
-Default: false.
-
 ## License
 
 All the markdown files under the `src/` directory are licensed
