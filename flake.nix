@@ -153,7 +153,25 @@
             enableACME = true;
             forceSSL   = true;
 
-            proxyPass = "http://127.0.0.1:${cfg.port}";
+            locations."/".proxyPass = "http://localhost:${cfg.port}";
+          };
+
+          virtualHosts."www.${urlStripped}" = {
+            forceSSL   = true;
+            enableACME = true;
+
+            locations."/".extraConfig = ''
+              return 301 https://${urlStripped}$request_uri;
+            '';
+          };
+
+          virtualHosts._ = {
+            forceSSL    = true;
+            useACMEHost = urlStripped;
+
+            locations."/".extraCofig = ''
+              proxy_pass http://localhost:${cfg.port}/404;
+            '';
           };
         };
 
