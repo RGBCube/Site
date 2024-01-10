@@ -7,11 +7,7 @@ mod minify;
 mod page;
 mod routes;
 
-use std::net::{
-    IpAddr,
-    Ipv6Addr,
-    SocketAddr,
-};
+use std::net::SocketAddr;
 
 use anyhow::Context;
 use axum::Router;
@@ -39,7 +35,7 @@ async fn main() -> anyhow::Result<()> {
         .format_timestamp(None)
         .init();
 
-    let address = SocketAddr::new(IpAddr::from(Ipv6Addr::UNSPECIFIED), args.port);
+    let address = SocketAddr::new("::".parse().unwrap(), args.port);
 
     let router = Router::new()
         .merge(routes::router())
