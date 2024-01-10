@@ -149,7 +149,12 @@
           recommendedProxySettings = mkDefault true;
           recommendedTlsSettings   = mkDefault true;
 
-          virtualHosts.${urlStripped}.proxyPass = "http://127.0.0.1:${cfg.port}";
+          virtualHosts.${urlStripped} = {
+            enableACME = true;
+            forceSSL   = true;
+
+            proxyPass = "http://127.0.0.1:${cfg.port}";
+          };
         };
 
         systemd.services.site = {
