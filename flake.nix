@@ -147,6 +147,11 @@
       };
 
       config = mkIf cfg.enable {
+        security.acme.certs.${cfg.url} = {
+          domain = "*.${cfg.url}";
+          group  = "nginx";
+        };
+
         services.nginx = mkIf cfg.configureNginx {
           enable = true;
 
@@ -156,15 +161,15 @@
           recommendedTlsSettings   = mkDefault true;
 
           virtualHosts.${cfg.url} = {
-            enableACME = true;
-            forceSSL   = true;
+            forceSSL    = true;
+            useACMEHost = cfg.url;
 
             locations."/".proxyPass = "http://localhost:${toString cfg.port}";
           };
 
           virtualHosts."www.${cfg.url}" = {
-            enableACME = true;
-            forceSSL   = true;
+            forceSSL    = true;
+            useACMEHost = cfg.url;
 
             locations."/".extraConfig = ''
               return 301 https://${cfg.url}$request_uri;
@@ -173,7 +178,7 @@
 
           virtualHosts._ = {
             forceSSL    = true;
-            useACMEHost = "*.${cfg.url}";
+            useACMEHost = cfg.url;
 
             locations."/".extraConfig = ''
               proxy_pass http://localhost:${toString cfg.port}/404;
@@ -184,8 +189,6 @@
             '';
           };
         };
-
-        security.acme.certs."*.${cfg.url}" = {};
 
         systemd.services.site = {
           description = "RGBCube's Homepage";
