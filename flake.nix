@@ -185,6 +185,8 @@
           };
         };
 
+        security.acme.certs."*.${cfg.url}" = {};
+
         systemd.services.site = {
           description = "RGBCube's Homepage";
           requires    = [ "network.target" ];
