@@ -5,7 +5,7 @@ title: Contact
 You can contact me via:
 
 - Discord: `rgbcube` or `RGBCube#4777`
-- E-Mail: [`rgbsphere@gmail.com`](mailto:rgbsphere@gmail.com) (Soon to change, though. I am going to host my own mail server)
+- E-Mail: [`contact@rgbcu.be`](mailto:contact@rgbcu.be)
 
 Here are some other useful links as well:
 
