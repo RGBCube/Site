@@ -156,15 +156,15 @@
           recommendedTlsSettings   = mkDefault true;
 
           virtualHosts.${cfg.url} = {
-            enableACME = true;
-            forceSSL   = true;
+            forceSSL    = true;
+            useACMEHost = cfg.url;
 
             locations."/".proxyPass = "http://localhost:${toString cfg.port}";
           };
 
           virtualHosts."www.${cfg.url}" = {
-            forceSSL   = true;
-            enableACME = true;
+            forceSSL    = true;
+            useACMEHost = cfg.url;
 
             locations."/".extraConfig = ''
               return 301 https://${cfg.url}$request_uri;
