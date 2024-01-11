@@ -147,11 +147,6 @@
       };
 
       config = mkIf cfg.enable {
-        security.acme.certs.${cfg.url} = {
-          domain = "*.${cfg.url}";
-          group  = "nginx";
-        };
-
         services.nginx = mkIf cfg.configureNginx {
           enable = true;
 
