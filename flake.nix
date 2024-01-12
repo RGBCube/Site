@@ -159,7 +159,7 @@
             forceSSL    = true;
             useACMEHost = cfg.url;
 
-            locations."/".proxyPass = "http://[::1]:${toString cfg.port}";
+            locations."/".proxyPass = "http://[::]:${toString cfg.port}";
           };
 
           virtualHosts."www.${cfg.url}" = {
@@ -175,8 +175,8 @@
             forceSSL    = true;
             useACMEHost = cfg.url;
 
-            locations."/".proxyPass       = "http://[::1]:${toString cfg.port}/404";
-            locations."/assets".proxyPass = "http://[::1]:${toString cfg.port}/assets";
+            locations."/".proxyPass       = "http://[::]:${toString cfg.port}/404";
+            locations."/assets".proxyPass = "http://[::]:${toString cfg.port}/assets";
           };
         };
 

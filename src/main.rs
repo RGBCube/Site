@@ -35,7 +35,7 @@ async fn main() -> anyhow::Result<()> {
         .format_timestamp(None)
         .init();
 
-    let address = SocketAddr::new("::1".parse().unwrap(), args.port);
+    let address = SocketAddr::new("::".parse().unwrap(), args.port);
 
     let router = Router::new()
         .merge(routes::router())
