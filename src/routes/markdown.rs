@@ -12,10 +12,42 @@ use serde::Deserialize;
 
 use crate::markdown;
 
+mod ddmmyyyy {
+    use chrono::{
+        DateTime,
+        NaiveDate,
+        Utc,
+    };
+    use serde::{
+        self,
+        Deserialize,
+        Deserializer,
+    };
+
+    pub fn deserialize<'de, D>(deserializer: D) -> Result<Option<DateTime<Utc>>, D::Error>
+    where
+        D: Deserializer<'de>,
+    {
+        match Option::<String>::deserialize(deserializer)? {
+            None => Ok(None),
+            Some(s) => {
+                Ok(Some(DateTime::<Utc>::from_naive_utc_and_offset(
+                    NaiveDate::parse_from_str(&s, "%d/%m/%Y")
+                        .map_err(serde::de::Error::custom)?
+                        .and_hms_opt(0, 0, 0)
+                        .unwrap(),
+                    Utc,
+                )))
+            },
+        }
+    }
+}
+
 #[derive(Deserialize, Debug)]
 pub struct Metadata {
     pub title: String,
     pub description: Option<String>,
+    #[serde(default, with = "ddmmyyyy")]
     pub date: Option<DateTime<Utc>>,
     pub tags: Option<Vec<String>>,
 }

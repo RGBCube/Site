@@ -54,11 +54,12 @@ static ENTRIES: LazyLock<IndexMap<&'static str, (&'static Metadata, Markup)>> = 
                                 p {
                                     "Tags: "
                                     (tags.join(", "))
+                                    "."
                                 }
                             }
 
                             p {
-                                "Also, if you are a dinosaur that enjoys good technogoly, check out my"
+                                "Also, if you are a dinosaur that enjoys good technology, check out my "
                                 a href="/feed" { "RSS Feed" }
                                 "."
                             }
@@ -80,9 +81,9 @@ pub async fn index_handler() -> Markup {
         &html! {
             h1 { "Blog Articles" }
             p {
-                "Are you old? Then you might want to check out the super cool "
+                "Are you old? Then you might want to check out my super cool hand-generated "
                 a href="/feed" { "RSS Feed" }
-                "."
+                " too!"
             }
 
             ul {
@@ -113,7 +114,7 @@ static FEED: LazyLock<Bytes> = LazyLock::new(|| {
 
     let items = ENTRIES.iter().map(|(path, (metadata, body))| {
         ItemBuilder::default()
-            .link(Some(format!("{url}{path}")))
+            .link(Some(format!("{url}blog/{path}")))
             .title(Some(metadata.title.clone()))
             .description(metadata.description.clone())
             .author(Some("contact@rgbcu.be".to_string()))
