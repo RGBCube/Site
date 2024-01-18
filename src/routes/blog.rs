@@ -39,8 +39,8 @@ use crate::{
     },
 };
 
-static ENTRIES: LazyLock<IndexMap<&'static str, (&'static Metadata, Markup)>> =
-    LazyLock::new(|| {
+static ENTRIES: LazyLock<IndexMap<&'static str, (&'static Metadata, Markup)>> = LazyLock::new(
+    || {
         IndexMap::from_iter(
             PAGES
                 .iter()
@@ -56,6 +56,12 @@ static ENTRIES: LazyLock<IndexMap<&'static str, (&'static Metadata, Markup)>> =
                                     (tags.join(", "))
                                 }
                             }
+
+                            p {
+                                "Also, if you are a dinosaur that enjoys good technogoly, check out my"
+                                a href="/feed" { "RSS Feed" }
+                                "."
+                            }
                         };
 
                         Some((name, (metadata, body)))
@@ -64,7 +70,8 @@ static ENTRIES: LazyLock<IndexMap<&'static str, (&'static Metadata, Markup)>> =
                     }
                 }),
         )
-    });
+    },
+);
 
 pub async fn index_handler() -> Markup {
     text::create(
@@ -72,7 +79,11 @@ pub async fn index_handler() -> Markup {
         Page::Blog,
         &html! {
             h1 { "Blog Articles" }
-            p { "RSS feed coming soon, probably :)" }
+            p {
+                "Are you old? Then you might want to check out the super cool "
+                a href="/feed" { "RSS Feed" }
+                "."
+            }
 
             ul {
                 @for (path, (metadata, ..)) in ENTRIES.iter() {
