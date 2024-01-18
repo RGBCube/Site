@@ -6,6 +6,7 @@ You can contact me via:
 
 - Discord: `rgbcube` or `RGBCube#4777`
 - E-Mail: [`contact@rgbcu.be`](mailto:contact@rgbcu.be)
+- Matrix: [`@rgbcube:rgbcu.be`](https://matrix.to/#/@rgbcube:rgbcu.be)
 
 Here are some other useful links as well:
 

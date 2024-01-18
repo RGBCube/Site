@@ -148,13 +148,6 @@
 
       config = mkIf cfg.enable {
         services.nginx = mkIf cfg.configureNginx {
-          enable = true;
-
-          recommendedGzipSettings  = mkDefault true;
-          recommendedOptimisation  = mkDefault true;
-          recommendedProxySettings = mkDefault true;
-          recommendedTlsSettings   = mkDefault true;
-
           virtualHosts.${cfg.url} = {
             forceSSL    = true;
             useACMEHost = cfg.url;
