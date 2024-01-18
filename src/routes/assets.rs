@@ -25,7 +25,7 @@ use crate::{
     },
 };
 
-const ASSET_EXTENSIONS: &[&str] = &[".js", ".css", ".woff2", ".gif", ".txt"];
+const ASSET_EXTENSIONS: &[&str] = &[".js", ".css", ".woff2", ".gif", ".png", ".txt"];
 const ROOT_EXTENSIONS: &[&str] = &[".txt"];
 
 static ASSETS: LazyLock<HashMap<String, Bytes>> = LazyLock::new(|| {

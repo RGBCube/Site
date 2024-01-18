@@ -50,6 +50,7 @@
     gifFilter   = path: type: builtins.match ".*gif$" path != null;
     jsFilter    = path: type: builtins.match ".*js$" path != null;
     mdFilter    = path: type: builtins.match ".*md$" path != null;
+    pngFilter   = path: type: builtins.match ".*png$" path != null;
     txtFilter   = path: type: builtins.match ".*txt$" path != null;
     woff2Filter = path: type: builtins.match ".*woff2$" path != null;
 
@@ -60,7 +61,8 @@
         || (gifFilter   path type)
         || (jsFilter    path type)
         || (mdFilter    path type)
-        || (txtFilter    path type)
+        || (pngFilter   path type)
+        || (txtFilter   path type)
         || (woff2Filter path type);
     };
 

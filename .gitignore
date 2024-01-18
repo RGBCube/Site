@@ -13,6 +13,7 @@
 !.gitignore
 
 !*.gif
+!*.png
 !*.woff2
 
 !*.css

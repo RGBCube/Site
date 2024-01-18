@@ -76,7 +76,6 @@ pub fn create(title: Option<&str>, head: Markup, body: Markup) -> Markup {
                         name.clone()
                     }
                 }) }
-                (pname("author", name))
 
                 (property("og:site_name", name))
                 (property("og:title", name))
@@ -87,10 +86,8 @@ pub fn create(title: Option<&str>, head: Markup, body: Markup) -> Markup {
 
                 link rel="icon" href=(asset::File("icon.gif")) type="image/gif";
 
-                (property("og:image", &asset::File("thumbnail.png").to_string()))
-                (property("og:image:type", "image/png"))
-                (property("og:image:height", "1080"))
-                (property("og:image:width", "600"))
+                (pname("twitter:image", &asset::File("icon.png").to_string()))
+                (pname("theme-color", "#00FFFF"))
 
                 @let url = MANIFEST.package.as_ref().unwrap().homepage().unwrap();
                 (property("og:url", url))
