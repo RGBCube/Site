@@ -1,6 +1,6 @@
 use chrono::{
     Datelike,
-    Local,
+    Utc,
 };
 use maud::{
     html,
@@ -39,7 +39,7 @@ pub fn create(title: Option<&str>, page: Page, body: &Markup) -> Markup {
 
                 footer {
                     "Copyright © "
-                    (Local::now().year())
+                    (Utc::now().year())
                     " RGBCube"
                 }
             }

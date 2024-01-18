@@ -3,14 +3,27 @@ use std::sync::LazyLock;
 use axum::{
     body::Body,
     extract::Path,
-    http::Response,
+    http::{
+        header::CONTENT_TYPE,
+        Response,
+    },
     response::IntoResponse,
+};
+use bytes::Bytes;
+use chrono::{
+    Datelike,
+    Utc,
 };
 use indexmap::IndexMap;
 use itertools::Itertools;
 use maud::{
     html,
     Markup,
+};
+use rss::{
+    CategoryBuilder,
+    ChannelBuilder,
+    ItemBuilder,
 };
 
 use super::markdown::{
@@ -22,6 +35,7 @@ use crate::{
     page::{
         text,
         Page,
+        MANIFEST,
     },
 };
 
@@ -81,4 +95,48 @@ pub async fn entry_handler(Path(entry): Path<String>) -> Response<Body> {
     } else {
         not_found::handler().await.into_response()
     }
+}
+
+static FEED: LazyLock<Bytes> = LazyLock::new(|| {
+    let url = MANIFEST.package.as_ref().unwrap().homepage().unwrap();
+
+    let items = ENTRIES.iter().map(|(path, (metadata, body))| {
+        ItemBuilder::default()
+            .link(Some(format!("{url}{path}")))
+            .title(Some(metadata.title.clone()))
+            .description(metadata.description.clone())
+            .author(Some("contact@rgbcu.be".to_string()))
+            .categories(
+                metadata
+                    .tags
+                    .as_ref()
+                    .unwrap()
+                    .iter()
+                    .map(|tag| CategoryBuilder::default().name(tag.clone()).build())
+                    .collect_vec(),
+            )
+            .pub_date(metadata.date.map(|date| date.to_rfc2822()))
+            .content(Some(body.clone().into_string()))
+            .build()
+    });
+
+    let channel = ChannelBuilder::default()
+        .title("RGBCube's Blog".to_string())
+        .link(format!("{url}blog"))
+        .description(
+            "The webpage where RGBCube puts his schizophrenic rambling about software and all the \
+             likes"
+                .to_string(),
+        )
+        .copyright(Some(format!("Copyright © {} RGBCube", Utc::now().year())))
+        .language(Some("en-us".to_string()))
+        .webmaster(Some("contact@rgbcu.be".to_string()))
+        .items(items.collect_vec())
+        .build();
+
+    Bytes::from(channel.to_string().into_bytes())
+});
+
+pub async fn feed_handler() -> impl IntoResponse {
+    ([(CONTENT_TYPE, "application/xml")], Bytes::clone(&*FEED))
 }

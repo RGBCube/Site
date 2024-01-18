@@ -3,7 +3,10 @@ use std::{
     sync::LazyLock,
 };
 
-use chrono::NaiveDate;
+use chrono::{
+    DateTime,
+    Utc,
+};
 use maud::Markup;
 use serde::Deserialize;
 
@@ -12,7 +15,8 @@ use crate::markdown;
 #[derive(Deserialize, Debug)]
 pub struct Metadata {
     pub title: String,
-    pub date: Option<NaiveDate>,
+    pub description: Option<String>,
+    pub date: Option<DateTime<Utc>>,
     pub tags: Option<Vec<String>>,
 }
 
