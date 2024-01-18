@@ -1,7 +1,6 @@
 # TODO
 
 - Add sitemap.xml.
-- Add RSS feed.
 - Codeblock styles and highlighting.
 - Idea: Make the cube favicon
   update with the cube, a route for the favicon
