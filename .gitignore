@@ -1,0 +1,17 @@
+*
+
+!site/
+!site/_includes/
+!site/blog/
+
+!*.css
+!*.md
+!*.vto
+
+!*.png
+!*.gif
+
+!.gitignore
+
+!*.json
+!*.ts
