@@ -2,13 +2,10 @@
 description: null
 color: null
 type: null
-tags: null
 thumbnail: null
-
 # Required:
 # title
 ---
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8"/>
@@ -31,15 +28,15 @@ thumbnail: null
     <meta property="og:type" content="{{ type ?? 'website' }}"> <!-- Can be either "website" or "article" -->
     <meta property="og:locale" content="en">
 
-    <link rel="canonical" href="{{ url }}">
-    <meta property="og:url" content="{{ url }}">
-    <meta name="twitter:url" content="{{ url }}">
+    <link rel="canonical" href="{{ url |> url(true) }}">
+    <meta property="og:url" content="{{ url |> url(true) }}">
+    <meta name="twitter:url" content="{{ url |> url(true) }}">
 
     <meta name="author" content="RGBCube">
     <meta property="og:article:author" content="RGBCube">
     <meta name="twitter:creator" content="RGBCubed">
 
-    {{ if tags }}
+    {{ if tags.length !== 0 }}
       <meta name="keywords" content="{{ tags.join(', ') }}">
       <meta property="og:article:tag" content="{{ tags.join(', ') }}">
     {{ /if }}
