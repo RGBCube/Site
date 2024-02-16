@@ -5,6 +5,7 @@ import esbuild from "lume/plugins/esbuild.ts";
 import feed from "lume/plugins/feed.ts";
 import jsx from "lume/plugins/jsx.ts";
 import minifyHTML from "lume/plugins/minify_html.ts";
+import sitemap from "lume/plugins/sitemap.ts";
 
 const site = lume({
   src: "./site",
@@ -35,6 +36,11 @@ site.use(feed({
     content: "$ content",
     lang: "en",
   },
+}));
+
+site.use(sitemap({
+  // @ts-ignore: We don't want lastmods.
+  lastmod: null,
 }));
 
 site.copyRemainingFiles();
