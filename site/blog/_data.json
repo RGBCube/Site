@@ -1,4 +1,6 @@
 {
   "layout": "article.vto",
-  "type": "article"
+  "type": "article",
+
+  "description": null
 }
