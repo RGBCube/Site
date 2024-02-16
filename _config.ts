@@ -6,7 +6,6 @@ import jsx from "lume/plugins/jsx.ts";
 import minifyHTML from "lume/plugins/minify_html.ts";
 
 const site = lume({
-  prettyUrls: false,
   src: "./site",
 });
 
