@@ -8,9 +8,8 @@
     ]
   },
   "tasks": {
-    "lume": "echo \"import 'lume/cli.ts'\" | deno run --allow-all -",
-    "build": "deno task lume",
-    "serve": "deno task lume --serve"
+    "build": "echo \"import 'lume/cli.ts'\" | deno run --allow-all -",
+    "serve": "deno task build --serve"
   },
   "imports": {
     "std/": "https://deno.land/std@0.212.0/",
