@@ -2,9 +2,9 @@
 
 !site/
 !site/_includes/
+!site/assets/
 !site/blog/
 
-!*.css
 !*.md
 !*.vto
 
