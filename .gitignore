@@ -5,11 +5,13 @@
 !site/assets/
 !site/blog/
 
+!*.css
 !*.md
 !*.vto
 
-!*.png
 !*.gif
+!*.png
+!*.woff2
 
 !.gitignore
 

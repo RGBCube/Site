@@ -1,0 +1,68 @@
+@font-face {
+  font-display: block;
+  font-family: "Bai Jamjuree";
+  font-weight: normal;
+  src: url("/assets/BaiJamjureeMedium.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "Bai Jamjuree";
+  font-style: italic;
+  font-weight: normal;
+  src: url("/assets/BaiJamjureeMediumItalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "Bai Jamjuree";
+  font-weight: bold;
+  src: url("/assets/BaiJamjureeBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "Bai Jamjuree";
+  font-style: italic;
+  font-weight: bold;
+  src: url("/assets/BaiJamjureeBoldItalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "JetBrains Mono";
+  font-weight: normal;
+  src: url("/assets/JetBrainsMonoMedium.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "JetBrains Mono";
+  font-style: italic;
+  font-weight: normal;
+  src: url("/assets/JetBrainsMonoMediumItalic.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "JetBrains Mono";
+  font-weight: bold;
+  src: url("/assets/JetBrainsMonoBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-display: block;
+  font-family: "JetBrains Mono";
+  font-style: italic;
+  font-weight: bold;
+  src: url("/assets/JetBrainsMonoBoldItalic.woff2") format("woff2");
+}
+
+html {
+  font-family: "Bai Jamjuree";
+}
+
+code,
+pre {
+  font-family: "JetBrains Mono";
+}
