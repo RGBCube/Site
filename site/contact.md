@@ -1,6 +1,5 @@
 ---
-layout: article.vto
-
+layout: text.vto
 title: Contact
 ---
 

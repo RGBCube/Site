@@ -1,0 +1,21 @@
+---
+layout: text.vto
+
+title: Blog
+---
+
+<h1>Blog Articles</h1>
+
+Are you old? Then you might want to check out my super cool
+<a href="/feed">RSS Feed</a> too!
+
+<ul>
+  {{ for article of search.pages("type=article", "date")}}
+  <li>
+    <p>
+      <a href="{{ article.url }}">{{ article.date.toISOString().slice(0, 10) }}</a>:
+      {{ article.title }}
+    </p>
+  </li>
+  {{ /for }}
+</ul>

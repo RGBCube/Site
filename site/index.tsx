@@ -1,6 +1,5 @@
 import Cube from "./_includes/cube.tsx";
 
-export const layout = "base.vto";
 export const title = "RGBCube";
 
 export default (

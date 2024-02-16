@@ -1,4 +1,4 @@
 {
-  "layout": "post.vto",
-  "title": "$ h1"
+  "layout": "article.vto",
+  "type": "article"
 }

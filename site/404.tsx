@@ -1,6 +1,5 @@
 import Cube from "./_includes/cube.tsx";
 
-export const layout = "base.vto";
 export const title = "404";
 
 export default (_data: Lume.Data, helpers: Lume.Helpers) => {
