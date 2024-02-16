@@ -1,6 +1,7 @@
 import lume from "lume/mod.ts";
 
 import codeHighlight from "lume/plugins/code_highlight.ts";
+import esbuild from "lume/plugins/esbuild.ts";
 import feed from "lume/plugins/feed.ts";
 import jsx from "lume/plugins/jsx.ts";
 import minifyHTML from "lume/plugins/minify_html.ts";
@@ -10,6 +11,7 @@ const site = lume({
 });
 
 site.use(codeHighlight());
+site.use(esbuild());
 site.use(jsx());
 site.use(minifyHTML());
 

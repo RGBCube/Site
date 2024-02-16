@@ -51,6 +51,28 @@
     <link rel="stylesheet" href="/assets/fonts.css">
   </head">
   <body>
+    <style>
+      * {
+        box-sizing: border-box;
+        position: relative;
+        min-width: 0;
+      }
+
+      html,
+      body {
+        background-color: black;
+        color: white;
+
+        height: 100dvh;
+        width: 100dvw;
+
+        margin: 0;
+      }
+
+      a {
+        text-decoration-line: none;
+      }
+    </style>
     {{ content }}
   </body>
 </html>

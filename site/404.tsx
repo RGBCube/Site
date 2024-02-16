@@ -18,13 +18,51 @@ export default (_data: Lume.Data, helpers: Lume.Helpers) => {
   );
 
   return (
-    <Cube
-      front={face}
-      back={face}
-      left={face}
-      right={face}
-      top={face}
-      bottom={face}
-    />
+    <>
+      <style
+        dangerouslySetInnerHTML={{
+          __html: `
+      .face {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        box-shadow: 0 0 10px whitesmoke;
+      }
+
+      .square {
+        width: 100%;
+        height: 100%;
+      }
+
+      .black {
+        background-color: black;
+      }
+
+      .magenta {
+        background-color: magenta;
+      }
+
+      .frame {
+        position: absolute;
+
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        color: black;
+      }
+        `,
+        }}
+      >
+      </style>
+      <Cube
+        front={face}
+        back={face}
+        left={face}
+        right={face}
+        top={face}
+        bottom={face}
+      />
+    </>
   );
 };
