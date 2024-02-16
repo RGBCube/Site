@@ -19,6 +19,15 @@ export default (_data: Lume.Data, helpers: Lume.Helpers) => {
 
   return (
     <>
+      <Cube
+        front={face}
+        back={face}
+        left={face}
+        right={face}
+        top={face}
+        bottom={face}
+      />
+
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -44,6 +53,7 @@ export default (_data: Lume.Data, helpers: Lume.Helpers) => {
 
       .frame {
         position: absolute;
+        z-index: 99999;
 
         top: 50%;
         left: 50%;
@@ -55,14 +65,6 @@ export default (_data: Lume.Data, helpers: Lume.Helpers) => {
         }}
       >
       </style>
-      <Cube
-        front={face}
-        back={face}
-        left={face}
-        right={face}
-        top={face}
-        bottom={face}
-      />
     </>
   );
 };
