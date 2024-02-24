@@ -50,6 +50,13 @@ layout: base.vto
     border-top-right-radius: 1em;
   }
 
+  @media (prefers-color-scheme: light) {
+    nav {
+      border: 0.15em solid black;
+      border-bottom-width: 0;
+    }
+  }
+
   nav a {
     color: black;
     font-weight: bold;
@@ -57,7 +64,7 @@ layout: base.vto
   }
 
   a {
-    color: yellow;
+    color: var(--link);
   }
 
   a:hover {
@@ -65,7 +72,7 @@ layout: base.vto
   }
 
   footer {
-    border-top: 0.15em solid white;
+    border-top: 0.15em solid var(--foreground);
 
     display: flex;
     justify-content: center;

@@ -38,7 +38,7 @@ const Cube = (props: CubeProps) => (
       }
 
       .frame:hover {
-        background-color: yellow;
+        background-color: var(--link);
       }
 
       .scene {

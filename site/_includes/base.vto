@@ -110,6 +110,22 @@
         src: url("/assets/JetBrainsMonoBoldItalic.woff2") format("woff2");
       }
 
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --background: black;
+          --foreground: white;
+          --link: yellow;
+        }
+      }
+
+      @media (prefers-color-scheme: light) {
+        :root {
+          --background: white;
+          --foreground: black;
+          --link: red;
+        }
+      }
+
       html {
         font-family: "Bai Jamjuree";
       }
@@ -127,8 +143,8 @@
 
       html,
       body {
-        background-color: black;
-        color: white;
+        background-color: var(--background);
+        color: var(--foreground);
 
         height: 100dvh;
         width: 100dvw;

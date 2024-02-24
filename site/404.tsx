@@ -35,7 +35,7 @@ export default (_data: Lume.Data, helpers: Lume.Helpers) => {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(2, 1fr);
-        box-shadow: 0 0 10px whitesmoke;
+        box-shadow: 0 0 10px var(--foreground);
       }
 
       .square {
