@@ -16,6 +16,22 @@ site.use(esbuild());
 site.use(jsx());
 site.use(minifyHTML());
 
+site.process([".html"], (pages) => {
+  pages.forEach((page) => {
+    const document = page.document!;
+
+    document.querySelectorAll("table").forEach((table) => {
+      const div = document.createElement("div");
+
+      div.classList.add("room", "rotated");
+      table.classList.add("rotated");
+
+      table.parentNode!.insertBefore(div, table);
+      div.appendChild(table);
+    });
+  });
+});
+
 site.use(feed({
   output: ["/blog.rss"],
 

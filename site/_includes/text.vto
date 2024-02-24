@@ -71,6 +71,31 @@ layout: base.vto
     font-style: italic;
   }
 
+  .room {
+    overflow-x: auto;
+  }
+
+  table {
+    border-collapse: collapse;
+    white-space: nowrap;
+  }
+
+  /* Doesn't seem to work with the scrolling? */
+  /* thead {
+    position: sticky;
+    top: 0;
+  } */
+
+  th, td {
+    border: 0.15em solid var(--foreground);
+    padding: 0.3em;
+  }
+
+  th {
+    background-color: var(--foreground);
+    color: var(--background);
+  }
+
   footer {
     border-top: 0.15rem solid var(--foreground);
 
