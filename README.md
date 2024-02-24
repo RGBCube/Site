@@ -4,15 +4,7 @@ The official website and link portal of RGBCube and his work.
 
 ## Building
 
-The repository can be built using Nix, simply run:
-
-```
-nix build
-```
-
-and the site contents will be under the `result/` symlink.
-
-If you don't have Nix, you can use Deno by itself instead:
+To build the site, you will need deno, simply run this command:
 
 ```
 deno task build

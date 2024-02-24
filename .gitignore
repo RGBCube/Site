@@ -5,7 +5,6 @@
 !site/assets/
 !site/blog/
 
-!*.css
 !*.md
 !*.vto
 
