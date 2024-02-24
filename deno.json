@@ -12,7 +12,7 @@
     "serve": "deno task build --serve"
   },
   "imports": {
-    "std/": "https://deno.land/std@0.212.0/",
-    "lume/": "https://deno.land/x/lume@v2.0.3/"
+    "std/": "https://deno.land/std@0.217.0/",
+    "lume/": "https://deno.land/x/lume@v2.1.0/"
   }
 }
