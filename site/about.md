@@ -27,4 +27,4 @@ for just a simple static website. Development was also *really* slow on a i5 fro
 2015 so I decided to ditch it and use Lume.
 
 Here is the up to date [GitHub repository for said site](https://github.com/RGBCube/Site),
-and here is the [historical version written in Rust](https://github.com/RGBCube/Site/tree/b61b4c3da1992b69ff86a69cec670e2cf8d85f33).
+and here is the [historical version written in Rust](https://github.com/RGBCube/Site/tree/rust-legacy).
