@@ -1,6 +1,7 @@
 import Cube from "./_includes/cube.tsx";
 
 export const title = "RGBCube";
+export const viewportFixed = true;
 
 export default (
   <>

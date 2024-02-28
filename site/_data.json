@@ -4,5 +4,7 @@
 
   "color": "#00FFFF",
   "description": "The official website and link portal of RGBCube and his work.",
-  "thumbnail": null
+  "thumbnail": null,
+
+  "viewportFixed": false
 }

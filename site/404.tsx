@@ -1,6 +1,7 @@
 import Cube from "./_includes/cube.tsx";
 
 export const title = "404";
+export const viewportFixed = true;
 
 export default (_data: Lume.Data, helpers: Lume.Helpers) => {
   const face = (
