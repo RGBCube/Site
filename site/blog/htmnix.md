@@ -3,7 +3,6 @@ title: HTMNIX
 description: How the absolutely cursed HTMNIX project works.
 
 date: 2024-03-04
-draft: true
 
 tags:
 - html
