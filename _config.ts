@@ -23,11 +23,23 @@ site.process([".html"], (pages) => {
     document.querySelectorAll("table").forEach((table) => {
       const div = document.createElement("div");
 
-      div.classList.add("room", "rotated");
       table.classList.add("rotated");
+      div.classList.add("overflow", "rotated");
 
       table.parentNode!.insertBefore(div, table);
       div.appendChild(table);
+    });
+
+    document.querySelectorAll(".hljs").forEach((code) => {
+      const pre = code.parentElement!;
+      const div = document.createElement("div");
+
+      code.classList.add("rotated");
+      pre.classList.add("rotated");
+      div.classList.add("overflow", "rotated");
+
+      pre.parentNode?.insertBefore(div, pre);
+      div.appendChild(pre);
     });
   });
 });

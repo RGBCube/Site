@@ -3,12 +3,21 @@ layout: base.vto
 ---
 
 <style>
+  /* Centering */
   html,
   body {
     display: flex;
     justify-content: center;
   }
 
+  .centered {
+    font-size: large;
+
+    display: initial;
+    width: min(100vw - 2rem, 50rem);
+  }
+
+  /* Make wrapping pretty */
   h1,
   h2,
   h3,
@@ -20,21 +29,17 @@ layout: base.vto
     text-wrap: pretty;
   }
 
-  .centered {
-    font-size: large;
-
-    display: initial;
-    width: min(100vw - 2rem, 50rem);
-  }
-
+  /* Rotate nav, tables and codeblocks so the scrollbar is at the top */
   .rotated {
     transform: rotateX(180deg);
   }
 
-  .content {
-    overflow-wrap: break-word;
+  /* Make tables and other elements scroll horizontally */
+  .overflow {
+    overflow-x: auto;
   }
 
+  /* Style nav */
   nav {
     font-size: larger;
     word-break: normal;
@@ -63,6 +68,11 @@ layout: base.vto
     margin-right: 0.6rem;
   }
 
+  /* Style content */
+  .content {
+    overflow-wrap: break-word;
+  }
+
   a {
     color: var(--link);
   }
@@ -71,10 +81,24 @@ layout: base.vto
     font-style: italic;
   }
 
-  .room {
-    overflow-x: auto;
+  blockquote {
+    border-left: 0.15rem solid var(--foreground);
+    padding: 0.6rem;
   }
 
+  @media (prefers-color-scheme: dark) {
+    blockquote {
+      background-color: #222;
+    }
+  }
+
+  @media (prefers-color-scheme: light) {
+    blockquote {
+      background-color: #EEE;
+    }
+  }
+
+  /* Style tables */
   table {
     border-collapse: collapse;
     white-space: nowrap;
@@ -87,8 +111,8 @@ layout: base.vto
   } */
 
   th, td {
-    border: 0.15em solid var(--foreground);
-    padding: 0.3em;
+    border: 0.15rem solid var(--foreground);
+    padding: 0.3rem;
   }
 
   th {
@@ -96,6 +120,35 @@ layout: base.vto
     color: var(--background);
   }
 
+  /* Codeblocks */
+  .rotated:has(pre) {
+    padding: 0.6rem;
+    border: 0.15rem solid var(--foreground);
+  }
+
+  pre:has(code) {
+    margin: 0;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .hljs-attr { color: lightblue; }
+    .hljs-keyword { color: firebrick; }
+    .hljs-number { color: mediumslateblue; }
+    .hljs-string { color: limegreen; }
+    .hljs-title { color: lightcoral; }
+    .hljs-type { color: aquamarine; }
+  }
+
+  @media (prefers-color-scheme: light) {
+    .hljs-attr { color: dodgerblue; }
+    .hljs-keyword { color: darkred; }
+    .hljs-number { color: darkslateblue; }
+    .hljs-string { color: darkgreen; }
+    .hljs-title { color: darkgoldenrod; }
+    .hljs-type { color: darkcyan; }
+  }
+
+  /* The end */
   footer {
     border-top: 0.15rem solid var(--foreground);
 
