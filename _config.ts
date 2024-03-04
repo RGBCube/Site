@@ -36,21 +36,20 @@ site.use(feed({
   output: ["/blog.rss"],
 
   query: "type=article",
-  sort: "date=desc",
+  sort: "date=asc",
+  limit: Infinity,
 
   info: {
     title: "RGBCube's Blog",
     description:
       "The blog where RGBCube dumps his schizophrenic ramblings about software and all the likes.",
-    lang: "en",
     generator: false,
   },
   items: {
     title: "=title",
     description: "=description",
     published: "=date",
-    content: "$ content",
-    lang: "en",
+    content: "$.content",
   },
 }));
 
