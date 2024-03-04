@@ -135,6 +135,7 @@ layout: base.vto
 
   @media (prefers-color-scheme: dark) {
     .hljs-attr { color: lightblue; }
+    .hljs-built_in { color: firebrick; }
     .hljs-keyword { color: firebrick; }
     .hljs-number { color: mediumslateblue; }
     .hljs-string { color: limegreen; }
@@ -143,7 +144,8 @@ layout: base.vto
   }
 
   @media (prefers-color-scheme: light) {
-    .hljs-attr { color: dodgerblue; }
+    .hljs-attr { color: darkblue; }
+    .hljs-built_in { color: darkred; }
     .hljs-keyword { color: darkred; }
     .hljs-number { color: darkslateblue; }
     .hljs-string { color: darkgreen; }
@@ -152,9 +154,11 @@ layout: base.vto
   }
 
   /* The end */
-  footer {
-    border-top: 0.15rem solid var(--foreground);
+  hr {
+    border: 0.15rem solid var(--foreground);
+  }
 
+  footer {
     display: flex;
     justify-content: center;
 
@@ -177,5 +181,6 @@ layout: base.vto
 
   {{ content }}
 
+  <hr>
   <footer>Copyright {{ new Date().getFullYear() }} © RGBCube</footer>
 </div>
