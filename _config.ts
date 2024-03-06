@@ -45,7 +45,7 @@ site.process([".html"], (pages) => {
 });
 
 site.use(feed({
-  output: ["/blog.rss"],
+  output: ["/blog.rss", "/blog.json"],
 
   query: "type=article",
   sort: "date=asc",
