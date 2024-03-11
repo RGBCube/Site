@@ -1,53 +1,53 @@
 <html lang="en">
   <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0{{ viewportFixed ? ', maximum-scale=1.0, user-scalable=0' : '' }}"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0{{ viewportFixed ? ', maximum-scale=1.0, user-scalable=0' : '' }}">
 
     <title>{{ title }}</title>
-    <meta property="og:title" content="{{ title }}"/>
-    <meta property="og:site_name" content="{{ title }}"/>
-    <meta name="twitter:title" content="{{ title }}"/>
+    <meta property="og:title" content="{{ title }}">
+    <meta property="og:site_name" content="{{ title }}">
+    <meta name="twitter:title" content="{{ title }}">
 
-    <meta name="description" content="{{ description }}"/>
-    <meta property="og:description" content="{{ description }}"/>
-    <meta name="twitter:description" content="{{ description }}"/>
+    <meta name="description" content="{{ description }}">
+    <meta property="og:description" content="{{ description }}">
+    <meta name="twitter:description" content="{{ description }}">
 
-    <meta name="theme-color" content="{{ color }}"/>
+    <meta name="theme-color" content="{{ color }}">
 
-    <link rel="alternate" type="application/rss+xml" href="/blog.rss"/>
-    <link rel="alternate" type="application/feed+json" href="/blog.json"/>
+    <link rel="alternate" type="application/rss+xml" href="/blog.rss">
+    <link rel="alternate" type="application/feed+json" href="/blog.json">
 
-    <meta property="og:type" content="{{ type }}"/>
-    <meta property="og:locale" content="en"/>
+    <meta property="og:type" content="{{ type }}">
+    <meta property="og:locale" content="en">
 
-    <link rel="canonical" href="{{ url |> url(true) }}"/>
-    <meta property="og:url" content="{{ url |> url(true) }}"/>
-    <meta name="twitter:url" content="{{ url |> url(true) }}"/>
+    <link rel="canonical" href="{{ url |> url(true) }}">
+    <meta property="og:url" content="{{ url |> url(true) }}">
+    <meta name="twitter:url" content="{{ url |> url(true) }}">
 
-    <meta name="author" content="RGBCube"/>
-    <meta property="og:article:author" content="RGBCube"/>
-    <meta name="twitter:creator" content="RGBCubed"/>
+    <meta name="author" content="RGBCube">
+    <meta property="og:article:author" content="RGBCube">
+    <meta name="twitter:creator" content="RGBCubed">
 
     {{ if tags.length !== 0 }}
-      <meta name="keywords" content="{{ tags.join(', ') }}"/>
-      <meta property="og:article:tag" content="{{ tags.join(', ') }}"/>
+      <meta name="keywords" content="{{ tags.join(', ') }}">
+      <meta property="og:article:tag" content="{{ tags.join(', ') }}">
     {{ /if }}
 
     {{ if date }} <!-- For some reason this is always true, even though I do not set it. -->
-      <meta property="og:article:published_time" content="{{ date }}"/>
+      <meta property="og:article:published_time" content="{{ date }}">
     {{ /if }}
 
     {{ if thumbnail }}
-      <meta name="twitter:card" content="summary_large_image"/>
-      <meta name="twitter:image" content="{{ thumbnail }}"/>
-      <meta property="og:image" content="{{ thumbnail }}"/>
+      <meta name="twitter:card" content="summary_large_image">
+      <meta name="twitter:image" content="{{ thumbnail }}">
+      <meta property="og:image" content="{{ thumbnail }}">
     {{ else }}
-      <meta name="twitter:card" content="summary"/>
-      <meta name="twitter:image" content="/assets/icon.png"/>
+      <meta name="twitter:card" content="summary">
+      <meta name="twitter:image" content="/assets/icon.png">
     {{ /if }}
 
-    <link rel="icon" href="/assets/icon.gif"/>
-    <link rel="apple-touch-icon" href="/assets/icon.png"/>
+    <link rel="icon" href="/assets/icon.gif">
+    <link rel="apple-touch-icon" href="/assets/icon.png">
   </head>
   <body>
     <style>
