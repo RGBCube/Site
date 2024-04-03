@@ -53,6 +53,10 @@ Maybe the 11th bit got flipped, making it increment 1024?
 Aha! So the 11th bit got flipped by something. And that something was probably
 a cosmic ray.
 
+EDIT: It was not a cosmic ray. As pointed out by [@BenjaminRi's comment on lobste.rs](https://lobste.rs/s/jb1o6q/cosmic_drift#c_1ztluj)
+it was either a bug or storage corruption as the alarm ran late the next day. You should
+still create more than one alarm just in case if you are using a phone prone to this, however.
+
 My main takeaway from this event is to create more than one alarm, for extra redundancy.
 Who knew being prone to sleeping in could save you from your alarm getting
 shifted 12 minutes into the future :^).
