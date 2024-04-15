@@ -42,7 +42,7 @@ You are somewhat correct. But not quite.
 
 Nix `<foo>` expressions actually boil down to a call of the builtin `__findFile`, like so:
 
-```sh
+```shell
 ❯ nix-instantiate --parse --expr "<foo>"
 
 (__findFile __nixPath "foo")

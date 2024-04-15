@@ -68,6 +68,17 @@ layout: base.vto
     margin-right: 0.6rem;
   }
 
+  /* Make images fit */
+  p:has(img) {
+    display: flex;
+    justify-content: center;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
   /* Style content */
   .content {
     overflow-wrap: break-word;
@@ -128,7 +139,7 @@ layout: base.vto
     border: 0.15rem solid var(--foreground);
   }
 
-  pre:has(code) {
+  pre {
     margin: 0;
   }
 
