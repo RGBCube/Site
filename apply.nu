@@ -2,7 +2,7 @@
 
 # Applies the changes to the site by uploading it to the VPS.
 def main [] {
-  deno task build --location https://rgbcu.be/
+  LUME_DRAFTS=false deno task build --location https://rgbcu.be/
 
   cd _site
   rsync --delete --recursive --compress ./ cube:/var/www/site
