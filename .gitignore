@@ -9,7 +9,7 @@
 !*.vto
 
 !*.gif
-!*.png
+!*.webp
 !*.woff2
 
 !.gitignore
