@@ -503,3 +503,204 @@ in an attribute set.
 ## Flakes invented for Target Corporation
 
 [The development of flakes was partially funded by Target Corporation.](https://www.tweag.io/blog/2020-07-31-nixos-flakes/#conclusion)
+
+# Tier 3: Assigned Nix Hacker at Employment
+
+<h2>
+
+```shell
+#!/usr/bin/env nix-shell
+#!nix-shell -i python3 -p python3
+```
+</h2>
+
+_(taken verbatim from `man nix-shell`)_
+
+You  can  use  nix-shell as a script interpreter
+to allow scripts written in arbitrary languages
+to obtain their own dependencies via Nix. This
+is done by starting the script with the following lines:
+
+```shell
+#!/usr/bin/env nix-shell
+#!nix-shell -i real-interpreter --packages packages
+```
+
+Where `real-interpreter` is the "real" script interpreter
+that will be invoked by nix-shell after it has obtained the
+dependencies and initialised the environment, and packages
+are the attribute names of the dependencies in `<nixpkgs>`.
+
+The lines starting with `#!nix-shell` specify nix-shell options
+(see  above). Note that you cannot write `#!/usr/bin/env nix-shell -i ...` 
+because many operating systems only allow one argument in `#!` lines.
+
+For example, here is a Python script that
+depends on Python and the prettytable package:
+
+```python
+#!/usr/bin/env nix-shell
+#!nix-shell -i python --packages python pythonPackages.prettytable
+
+import prettytable
+
+# Print a simple table.
+t = prettytable.PrettyTable(["N", "N^2"])
+for n in range(1, 10): t.add_row([n, n * n])
+print t
+```
+
+## `--accept-flake-config` more like `--pwn-me-mommy`
+
+TODO
+
+## Zilch
+
+ZilchOS is a decidedly tiny Nix-based distro. It is a great project
+to see how NixOS actually works behind the scenes without too much
+noise to distract.
+
+It was created by [t184256](https://github.com/t184256) on GitHub,
+here is the [ZilchOS GitHub organization](https://github.com/ZilchOS).
+
+## `set.a or "meow"` is set-specific
+
+TODO
+
+## `builtins.toString [true false true] == "1  1"`
+
+I find it weird that this is in the 3rd tier. It's actually pretty simple:
+
+Nix converts `true` to `"1"` and `false` to `"" (empty string)` when
+asked to convert a boolean to a string.
+
+And when you convert a list to a string, it converts individual items and then
+joins them with a space character (0xA).
+
+So `builtins.toString [true false true]` makes `1  1`
+
+## `__structuredAttrs`
+
+`__structuredAttrs`, when set to `true` in a derivation argument,
+will set the `NIX_ATTRS_JSON_FILE` and `NIX_ATTRS_SH_FILE` file
+paths to that arguments contents serialized in the respective
+format.
+
+Here is an example:
+
+```nix
+with import <nixpkgs> {};
+
+runCommand "attrs.json" { __structuredAttrs = true; foo.bar = "baz"; } ''
+  cat $NIX_ATTRS_JSON_FILE > $out
+''
+```
+
+Build it with `nix build --impure --expr/--file` and then `cat result`, you will
+get something similar to this:
+
+<details>
+<summary>Long JSON output</summary>
+
+```json
+{
+  "buildCommand": "cat $NIX_ATTRS_JSON_FILE > $out\n",
+  "buildInputs": [],
+  "builder": "/nix/store/a1s263pmsci9zykm5xcdf7x9rv26w6d5-bash-5.2p26/bin/bash",
+  "cmakeFlags": [],
+  "configureFlags": [],
+  "depsBuildBuild": [],
+  "depsBuildBuildPropagated": [],
+  "depsBuildTarget": [],
+  "depsBuildTargetPropagated": [],
+  "depsHostHost": [],
+  "depsHostHostPropagated": [],
+  "depsTargetTarget": [],
+  "depsTargetTargetPropagated": [],
+  "doCheck": false,
+  "doInstallCheck": false,
+  "enableParallelBuilding": true,
+  "enableParallelChecking": true,
+  "enableParallelInstalling": true,
+  "env": {},
+  "foo": {
+    "bar": "baz"
+  },
+  "mesonFlags": [],
+  "name": "attrs.json",
+  "nativeBuildInputs": [],
+  "outputs": {
+    "out": "/nix/store/cw8gnrh2jwww459cbwig4y97an79qqnx-attrs.json"
+  },
+  "passAsFile": [
+    "buildCommand"
+  ],
+  "patches": [],
+  "propagatedBuildInputs": [],
+  "propagatedNativeBuildInputs": [],
+  "stdenv": "/nix/store/zykyv2faxz6s1l2pdn6i7i5hb5r5wri6-stdenv-linux",
+  "strictDeps": false,
+  "system": "x86_64-linux"
+}
+```
+</details>
+
+## `__functor`
+
+`__functor` is a magic attribute you can add on a set to make it
+callable. The lambda you assign to it must "accept 2 arguments".
+The first being itself (commonly named "self") and the second
+being the argument that was passed in.
+
+Here's an example:
+
+```nix
+let
+  mulAll = {
+    accum     = 1;
+    __functor = self: arg: self // {
+      accum = self.accum * arg;
+    };
+  };
+in mulAll 1 2 3 4 5
+```
+
+This outputs the following:
+
+```nix
+{ __functor = <LAMBDA>; accum = 120; }
+```
+
+(oh no - we just emulated OOP in Nix)
+
+## `--output-format bar-with-logs` on old CLI
+
+(later renamed to `--output-format`)
+
+You know how the new `nix-command` CLI has that bar at the bottom,
+which looks like `[4/0/804 built, 7.7/112.5 MiB DL] downloading '...'`?
+
+This option allows you to have that output format in the old CLI by
+passing in `--log-format bar-with-logs`.
+
+## `traceVerbose`
+
+`builtins.traceVerbose` behaves like `builtins.trace` when you pass
+`--trace-verbose` to the Nix CLI. If you don't pass in that option,
+it completely ignores the first argument and returns the second one.
+
+# Tier 4: Nix is Easy We Promise
+
+## `let f = a: a; s = {f=f;}; in [(f == f) (s == s)]`
+
+This evaluates to `[ false true ]`. Why?
+
+Normally, Functions in Nix cannot be compared. Comparing
+two functions will _always_ return false, at least when done
+directly.
+
+However, Nix has a [really ugly hack]()
+where comparing two attribute sets with a function member can be true,
+assuming the underlying pointer of a struct field value points to the
+same function, the princible described in the previous paragraph is
+ignored.
