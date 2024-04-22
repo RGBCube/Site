@@ -699,8 +699,24 @@ Normally, Functions in Nix cannot be compared. Comparing
 two functions will _always_ return false, at least when done
 directly.
 
-However, Nix has a [really ugly hack]()
-where comparing two attribute sets with a function member can be true,
-assuming the underlying pointer of a struct field value points to the
-same function, the princible described in the previous paragraph is
-ignored.
+But if two attribute sets that are compared have the same address,
+Nix ignores this and does a pointer comparision, totally ignoring
+all members. This is a hack.
+
+[Link to code that does this.](https://github.com/NixOS/nix/blob/aa165301d1ae3b306319a6a834dc1d4e340a7112/src/libexpr/eval.cc#L2525-L2528)
+Here's the snippet:
+
+```cpp
+bool EvalState::eqValues(Value & v1, Value & v2, const PosIdx pos, std::string_view errorCtx)
+{
+    forceValue(v1, pos);
+    forceValue(v2, pos);
+
+    /* !!! Hack to support some old broken code that relies on pointer
+       equality tests between sets.  (Specifically, builderDefs calls
+       uniqList on a list of sets.)  Will remove this eventually. */
+    if (&v1 == &v2) return true;
+```
+
+This "temporary hack" was commited in 14 years ago. You can do whatever
+you want with this information.
