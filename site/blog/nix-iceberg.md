@@ -720,3 +720,72 @@ bool EvalState::eqValues(Value & v1, Value & v2, const PosIdx pos, std::string_v
 
 This "temporary hack" was commited in 14 years ago. You can do whatever
 you want with this information.
+
+## Nix Plugins
+
+As suprising as it sounds, Nix does indeed supports plugins. You can load plugins
+using the [`plugin-files`](https://nix.dev/manual/nix/2.22/command-ref/conf-file#conf-plugin-files)
+configuration option.
+
+From the configuration reference:
+
+> A list of plugin files to be loaded by Nix. Each of these files will be dlopened by
+> Nix. If they contain the symbol nix_plugin_entry(), this symbol will be called.
+> Alternatively, they can affect execution through static initialization. In particular,
+> these plugins may construct static instances of RegisterPrimOp to add new primops
+> or constants to the expression language, RegisterStoreImplementation to add new
+> store implementations, RegisterCommand to add new subcommands to the nix command,
+> and RegisterSetting to add new nix config settings. See the constructors for those
+> types for more details.
+> 
+> Warning! These APIs are inherently unstable and may change from release to release.
+> 
+> Since these files are loaded into the same address space as Nix itself, they must
+> be DSOs compatible with the instance of Nix running at the time (i.e. compiled
+> against the same headers, not linked to any incompatible libraries). They should
+> not be linked to any Nix libs directly, as those will be available already at load time.
+> 
+> If an entry in the list is a directory, all files in the directory are loaded
+> as plugins (non-recursively).
+
+Some example plugins are [`nix-doc`](https://github.com/lf-/nix-doc)
+and [`nix-extra-builtins`](https://github.com/shlevy/nix-plugins).
+
+## `/bin/sh` and sandbox impurity
+
+By setting the [`sandbox-paths`](https://nix.dev/manual/nix/2.22/command-ref/conf-file#conf-sandbox-paths)
+option to `/bin/sh=/bin/sh`, Nix will bind the `/bin/sh` path in the
+build sandbox (left) to the `/bin/sh` path in the host (right).
+This is of course impure, but is useful for bootstrapping from
+absolute scratch without copying impure binaries to the Nix store.
+
+## `rec { a = 5; b = a + 1; __overrides.a = 6; }`
+
+There is a special field named `__overrides` in recursive attrset expressions,
+which simply overrides the parent attribute set with the keys inside it. This
+is different from the update operator (`//`) because that will not override the
+self-referneces in the recursive attribute set.
+
+`rec { a = 5; b = a + 1; __overrides.a = 6; }.b` will evaluate to 7,
+while `(rec { a = 5; b = a + 1; } // { a = 6; }).b` will evaluate to 6.
+
+## `let __div = c: map (__mul c); in 2 / [ 1 2 3 ]`
+
+As mentioned in my [HTMNIX blog post](/blog/htmnix), Nix operators get
+desugared into normal function calls before execution. All operators
+have their "hidden" equivalents that they get desugared into (`__div` is for `/`, etc.),
+so you can override them using `let in`.
+
+`let __div = c: map (__mul c); in 2 / [ 1 2 3 ]` is equivalent to
+`map (x: 2 * x) [ 1 2 3 ]` which evaluates to `[ 2 4 6 ]`.
+
+You can also check what a Nix snippet desugars into
+using `nix-instantiate --parse --expr 'expression here'`
+
+## `let __lessThan = a: b: b - a; in 1 > 2`
+
+As mentioned above, this expression will desugar into
+`let __lessThan = a: b: b - a; in __lessThan 1 2` which
+will evaluate to 1.
+
+## `__impure`
