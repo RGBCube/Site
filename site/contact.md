@@ -13,4 +13,4 @@ Here are some other useful links as well:
 
 - [GitHub](https://github.com/RGBCube)
 - [Twitch](https://www.twitch.tv/rgbcube)
-- [X](https://x.com/RGBCubed)
+- [X](https://x.com/HSVSphere)
