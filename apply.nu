@@ -1,7 +1,13 @@
 #!/usr/bin/env nu
 
 def --wrapped sync [...arguments] {
-  rsync --rsh "ssh -q" --delete-missing-args --recursive --compress ...$arguments
+  (rsync
+    --rsh "ssh -q"
+    --compress
+    --delete --recursive --force
+    --delete-excluded
+    --delete-missing-args
+    ...$arguments)
 }
 
 # Applies the changes to the site by uploading it to the VPS.
@@ -20,8 +26,18 @@ def main [] {
   }
 
   cd _site
-  [cube disk] | par-each { sync ./ ($in + ":/var/www/site") }
+  ssh -qtt cube "sudo nu -c '
+    mkdir /var/www
+    chown nginx:users -R /var/www
+    chmod 775 -R /var/www
+  '"
+  sync --chown nginx:users ./ cube:/var/www/site
+
+  ssh -qtt cube "sudo nu -c '
+    chown nginx:users -R /var/www
+    chmod 775 -R /var/www
+  '"
   cd -
 
-  echo $"(ansi green)Successfully uploaded!(ansi reset)"
+  print $"(ansi green)Successfully uploaded!(ansi reset)"
 }
