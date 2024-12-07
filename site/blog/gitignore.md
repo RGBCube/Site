@@ -17,7 +17,7 @@ You just started a new project. You ran `cargo init`,
 Those commands created the necessary files to work, it
 also added the following lines to your .gitignore:
 
-```
+```text
 target
 __pycache__
 bin
@@ -45,7 +45,7 @@ to gitignore .DS_Store](/assets/github-ds-store-mr-list.webp)
 Whatever. You just delete the file from the branch and
 add the file's name to the repositories gitignore:
 
-```
+```text
 target
 __pycache__
 bin
@@ -62,7 +62,7 @@ see that there is a whole directory that is irrelevant.
 You tell that person to delete the directory from the
 branch and add it to the gitignore. The gitignore lives on:
 
-```
+```text
 target
 __pycache__
 bin
@@ -73,7 +73,7 @@ bin
 Then, someone that uses IntelliJ IDEA commits five hundred
 XML files and the `.idea` directory. You repeat this process:
 
-```
+```text
 target
 __pycache__
 bin
@@ -104,7 +104,7 @@ of files (the gitignore) to a whitelist, by just
 ignoring everything and manually un-ignoring desired
 files. You change your gitignore to this:
 
-```
+```text
 *
 
 !.gitignore
