@@ -26,17 +26,21 @@ def main [] {
   }
 
   cd _site
-  ssh -qtt cube "sudo nu -c '
-    mkdir /var/www
-    chown nginx:users -R /var/www
-    chmod 775 -R /var/www
-  '"
-  sync --chown nginx:users ./ cube:/var/www/site
 
-  ssh -qtt cube "sudo nu -c '
-    chown nginx:users -R /var/www
-    chmod 775 -R /var/www
-  '"
+  for host in [cube, disk] {
+    ssh -qtt $host "sudo nu -c '
+      mkdir /var/www
+      chown nginx:users -R /var/www
+      chmod 775 -R /var/www
+    '"
+    sync --chown nginx:users ./ ($host + ":/var/www/site")
+
+    ssh -qtt $host "sudo nu -c '
+      chown nginx:users -R /var/www
+      chmod 775 -R /var/www
+    '"
+  }
+
   cd -
 
   print $"(ansi green)Successfully uploaded!(ansi reset)"
